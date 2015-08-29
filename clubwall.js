@@ -143,14 +143,14 @@ $( document ).ready(function(){
                         var EventDateDay = pad(splitdate[1], 2);
                         var EventDateYear = splitdate[2];
                         
-                        console.log(HostName);
+                        /*console.log(HostName);
                         console.log(EventName);
                         console.log(EventDesc);
                         console.log(EventDate);
                         console.log(EventTime);
                         console.log(EventLoc);
                         console.log(PosterID);
-                        console.log(Approved);
+                        console.log(Approved);*/
                         
                         if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y")
                         {
@@ -168,9 +168,7 @@ $( document ).ready(function(){
                 var weeklist = [];
                 $(ToBePosted).each(function(index){
                         
-                        $("#table tr:last").after("<tr><td>"+ToBePosted[index][9]+"</td><td><a href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td>"+ToBePosted[index][1]+"</td><td>"+ToBePosted[index][0]+"</td><td>"+ToBePosted[index][2]+"</td><td>"+ToBePosted[index][7]+"</td><td>"+ToBePosted[index][8]+"</td></tr>");
-                        
-                        console.log("<tr><td>"+ToBePosted[index][9]+"</td><a href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td>"+ToBePosted[index][1]+"</td><td><td>"+ToBePosted[index][0]+"</td><td>"+ToBePosted[index][2]+"</td><td>"+ToBePosted[index][7]+"</td><td>"+ToBePosted[index][8]+"</td><td></tr>");
+                        $("#table tr:last").after("<tr><td>"+ToBePosted[index][9]+"</td><td><a onError=\"this.href='#'\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\" onError=\"this.src='/clubhub/media/ClubHub_Logo.png'\"></a></td><td>"+ToBePosted[index][1]+"</td><td>"+ToBePosted[index][0]+"</td><td>"+ToBePosted[index][2]+"</td><td>"+ToBePosted[index][7]+"</td><td>"+ToBePosted[index][8]+"</td></tr>");
                     
                         /*var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
                         if(datelist.indexOf(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2)) == -1)
