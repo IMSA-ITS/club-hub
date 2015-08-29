@@ -6,7 +6,7 @@ $( document ).ready( function(){
                 $("body").css({"font-family":"\"Avenir Next\", sans-serif"});
                 $("h1, h2").css({"font-family":"\"Avenir Black\", sans-serif"});
         }		
-	$("#footer").append("<footer><p><a href=\"/\"><img class=\"footer-logo\" src=\"/media/IMSA_Undefined_Logo_White.png\" alt=\"#undefined\"></a>&nbsp;&nbsp;&nbsp;Copyright &copy; The #Undefined Project 2015</p></footer>");
+	/*$("#footer").append("<footer><p><a href=\"/\"><img class=\"footer-logo\" src=\"/media/IMSA_Undefined_Logo_White.png\" alt=\"#undefined\"></a>&nbsp;&nbsp;&nbsp;Copyright &copy; The #Undefined Project 2015</p></footer>");*/
 });
 
 function setCookie(cname, cvalue, exdays) {
