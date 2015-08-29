@@ -13,6 +13,8 @@
                 <script type="text/javascript" src="/clubhub/meta/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
                 <script src="clubwall.js"></script>
                 <script src="/clubhub/meta/speedysurvey.js"></script>
+                <script src="/clubhub/meta/jquery.tablesorter.min.js"></script>
+                <script src="/clubhub/meta/readmore.min.js"></script>
                 <script>
                         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -57,25 +59,28 @@
                         
                         <div id="main-body">
                                 <div class="body-box">
-                                        <div class="protip"><p>IMSA's events are sorted sequentially below. Click on the categories to sort according to them. Click on a host name, date, or location to filter by those events. Click on a poster to view its full size. Click on the event time to set up an email reminder for the event.</p></div>
+                                        <div class="protip"><p>IMSA events are sorted sequentially below. Click on the headers in the black bar to sort by those categories. Click on a time to setup an email reminder for that event.</p></div>
                                         <div>
                                             <table id="table">
-                                                <tr>
-                                                    <th class="table-info">Date</th>
-                                                    <th class="table-poster">Poster</th>
-                                                    <th class="table-name">Event</th>
-                                                    <th class="table-name">Host</th>
-                                                    <th class="table-long">Description</th>
-                                                    <th class="table-info">Time</th>
-                                                    <th class="table-info">Location</th>
-                                                </tr>
+                                                <thead>
+                                                    <tr>
+                                                        <th class="sortable table-info">Date</th>
+                                                        <th class="table-poster">Poster</th>
+                                                        <th class="sortable table-name">Event</th>
+                                                        <th class="sortable table-name">Host</th>
+                                                        <th class="table-long">Description</th>
+                                                        <th class="sortable table-info">Time</th>
+                                                        <th class="sortable table-info">Location</th>
+                                                    </tr>
+                                                <tbody>
+                                                </tbody>
                                             </table>
                                         </div>
                                         <div class="protip protip-green"><p>How are we doing? <a href="https://docs.google.com/forms/d/1yUp5F4jKBYsjFrFXqSQl3fHo9M8RALEqRhogvSnZba4/viewform?usp=send_form">Feedback Form (for Clubs)</a> <a href="https://docs.google.com/forms/d/1L0bRg58otPibw8Pv8dufQ0mGN9dJmEKtlt7Kyg38rVc/viewform?usp=send_form">Feedback Form (for Students)</a></p></div>
                                         
                                         <div class="css-button"><a href="https://script.google.com/macros/s/AKfycbybTeA-J2c6BOz0XRICgaJnHCjwpGhG-0PmATU0lcmUfNc_VLk/exec" target="_blank"><div>Register an Event</div></a></div>
                                         
-                                        <div class="protip protip-clear" style="background-color: rgba(0,0,0,0)"><p>Club Hub version 2.0.0</p></div>
+                                        <div class="css-button" id="clubhub-info"><a href="http://undef.in/projects/clubhub" target="_blank"><div>Club Hub version 1.9.9 Beta</div></a></div>
                                         
                                 </div>
                         </div>

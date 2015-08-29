@@ -129,7 +129,7 @@ footer
 
 .branding-box 
 {
-	width: 40%;
+	width: 35%;
         margin: 2% auto;
 	clear: both;
 }
@@ -139,23 +139,9 @@ footer
 	vertical-align: middle;
 }
 
-.branding-box h1
-{
-	font-family: "Roboto", sans-serif;
-	font-size: 2em;
-	font-weight: 300;
-	color: rgb(100,100,100);
-	vertical-align: middle;
-	padding-left: 2%;
-	display: inline-block;
-	position: relative;
-	/*left: -10%;*/
-	opacity: 1;
-}
-
 #club-logo 
 {	
-	width: 90%;
+	width: 100%;
 	height: auto;
 }
 
@@ -535,57 +521,6 @@ hr
     user-select: none;
 }
 
-/*.fancybox-title {
-    position:absolute;
-    width:160px;
-    left:-160px;
-    bottom: 20px;
-}*/
-
-.fancybox-wrap 
-{
-        width: 80% !important;
-}
-
-.fancybox-outer
-{
-        width: 50% !important;
-        height: auto !important;
-        float: left;
-}
-
-.fancybox-inner
-{
-        width: auto !important;
-        height: auto !important;
-}
-
-.fancybox-skin
-{
-        background-color: #FFFFFF !important;
-        border-radius: 2px !important;
-        color: black !important;
-}
-
-/*clearfix*/
-.fancybox-skin::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.fancybox-title {
-        float: right;
-        width: 45% !important;
-        padding: 2% !important;
-}
-
-.fancybox-title iframe
-{
-        width: 100%;
-        border-radius: 0.3em;
-} 
-
 /* Go To Club Hub */
 #gotoclubhub
 {
@@ -636,11 +571,16 @@ hr
         color: rgb(200,60,60);
 }
 
-.remindme
+.remindme-link
 {
-        position: absolute;
-        right: 0;
-        bottom: 0;
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+}
+
+.remindme:hover
+{
+    background-color: rgba(255,255,255,0.5);
 }
 
 /*Sort bar stuff*/
@@ -718,19 +658,35 @@ hr
         color: white;
 }
 
+#table th, #table td
+{
+    /*border: 1px solid rgb(100,100,100);*/
+}
+
+#table th:first-child {
+    border-radius: 5px 0 0 0;
+}
+
+#table th:last-child {
+    border-radius: 0 5px 0 0;
+}
+
+#table th:only-child{
+    border-radius: 5px 5px 0 0;
+}
+
 #table, #table th, #table td
 {
-    
-    border: 1px solid black;
     border-collapse: collapse;
     padding: 1em;
 }
 
 #table
 {
-        width: 100%;
-        border: none;
-        border-radius: 5px;        
+    width: 100%;
+    border-radius: 5px;        
+    background-color: rgb(250,250,250);
+    
 }
 
 
@@ -738,7 +694,36 @@ hr
 {
     color: white;
     background-color: rgb(80,80,80);
-    border-color: gray;
+}
+
+#table th.sortable
+{
+    cursor: pointer;
+}
+
+#table th.sortable:hover
+{
+    background-color: rgb(90,90,90);
+}
+
+#table th.headerSortUp
+{
+    background-color: rgb(245,65,65);
+}
+
+#table th.headerSortDown
+{
+    background-color: rgb(85,153,255);
+}
+
+#table th.headerSortUp:hover
+{
+    background-color: rgb(245,75,75);
+}
+
+#table th.headerSortDown:hover
+{
+    background-color: rgb(95,163,255)
 }
 
 #table .table-info
@@ -765,6 +750,11 @@ hr
     width: 100%;
 }
 
+#table tr:not(:last-child)
+{
+    border-bottom: 1px solid rgb(230,230,230);
+}
+
 .css-button a
 {
     text-decoration: none;
@@ -774,7 +764,7 @@ hr
 {
     margin: 2% auto;
     width: 25%;
-    height: 2em;
+    height: auto;
     background-color: rgb(85,153,255);
     color: white;
     font-size: 2em;
@@ -797,4 +787,24 @@ hr
 .css-button div:active
 {
     background-color: rgb(235,133,65);
+}
+
+#clubhub-info div
+{
+    background-color: rgb(240,240,240);
+    border: 1px solid rgb(80,80,80);
+    color: rgb(80,80,80);
+    font-size: 1em;
+    width: 15%;
+}
+
+#clubhub-info div:hover
+{
+    background-color: rgb(100,100,100);
+    color: white;
+}
+
+.description
+{
+    max-height: 5em;
 }

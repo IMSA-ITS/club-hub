@@ -110,6 +110,18 @@ $( document ).ready(function(){
                         return '<a href="' + url + '">' + url + '</a>';
                 })
         }
+        
+        function tConvert (time) {
+            // Check correct time format and split into components
+            time = time.toString ().match (/^([01]*\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) { // If time format correct
+                time = time.slice (1);  // Remove full string match value
+                time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+                time[0] = +time[0] % 12 || 12; // Adjust hours
+            }
+            return time.join (''); // return adjusted time or original string
+        }
 
         var PosterSpreadsheetKey = "1IDfn6Pl87E1hTDtZFuYswUJrESCIwYtn0QGgvN6ZsQs";
         var PosterFolderKey = "0B_vROCev3947fkNNdlVVUGpHVDgtSHNUZURtbS1wMXBfZlpJQkhaZ1JHcW8wbmxZcnEzbTQ";
@@ -168,7 +180,13 @@ $( document ).ready(function(){
                 var weeklist = [];
                 $(ToBePosted).each(function(index){
                         
-                        $("#table tr:last").after("<tr><td>"+ToBePosted[index][9]+"</td><td><a onError=\"this.href='#'\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\" onError=\"this.src='/clubhub/media/ClubHub_Logo.png'\"></a></td><td>"+ToBePosted[index][1]+"</td><td>"+ToBePosted[index][0]+"</td><td>"+ToBePosted[index][2]+"</td><td>"+ToBePosted[index][7]+"</td><td>"+ToBePosted[index][8]+"</td></tr>");
+                        $("#table tbody").append("<tr><td>"+ToBePosted[index][9]+"</td><td><a class=\"fancybox\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img class=\"poster-img\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td>"+ToBePosted[index][1]+"</td><td>"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"remindme\"><a class=\"remindme-link\" href=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\" target=\"_blank\">"+tConvert(ToBePosted[index][7])+"</a></td><td>"+ToBePosted[index][8]+"</td></tr>");
+                        
+                        $(".poster-img").error(function(){
+                            $(this).attr("src", "");
+                            $(this).hide();
+                            $(this).parent("a").attr("href", "");
+                        });
                     
                         /*var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
                         if(datelist.indexOf(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2)) == -1)
@@ -191,6 +209,20 @@ $( document ).ready(function(){
                                 $("#isowall").append("<div id=\"clubtip"+index+"\" class=\"mitem sorttip clubtip\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"a\"><p>"+ToBePosted[index][0]+"<p></div>");
                                 clublist.push(ToBePosted[index][0]);
                         }*/
+                });
+                
+                $("#table").tablesorter({
+                        headers: {
+                            1: { sorter: false },
+                            4: { sorter: false }
+                        }
+                });
+                
+                $(".description").readmore({
+                    speed: 200,
+                    moreLink: '<a href="#">Show more...</a>',
+                    lessLink: '<a href="#">...Show less.</a>',
+                    blockCSS: 'display: block; width: 100%;'
                 });
                 
                 /*
@@ -276,14 +308,6 @@ $( document ).ready(function(){
                 type: "image",
                 openEffect: "elastic",
                 closeEffect: "fade",
-                helpers: {
-                        overlay: {
-                                locked: false
-                        },
-                        title: {
-                                type: "inside",
-                        },
-                }
         });
         
         $(".menu").hover(function(){
