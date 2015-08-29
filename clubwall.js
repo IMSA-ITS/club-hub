@@ -111,8 +111,8 @@ $( document ).ready(function(){
                 })
         }
 
-        var PosterSpreadsheetKey = "1MwsGs0Gk8kV7MouZ5IsolOZZd-aVDJwK-RNfYxj8cZ8";
-        var PosterFolderKey = "0B_vROCev3947Qy1kN3Z2RUxOUU0";
+        var PosterSpreadsheetKey = "1IDfn6Pl87E1hTDtZFuYswUJrESCIwYtn0QGgvN6ZsQs";
+        var PosterFolderKey = "0B_vROCev3947fkNNdlVVUGpHVDgtSHNUZURtbS1wMXBfZlpJQkhaZ1JHcW8wbmxZcnEzbTQ";
         //console.log("HEY");
         $.getJSON("https://spreadsheets.google.com/feeds/list/"+PosterSpreadsheetKey+"/od6/public/values?alt=json", function(data){
                 //console.log(data);
@@ -129,30 +129,32 @@ $( document ).ready(function(){
                 var TodayYear = d.getFullYear();
                 
                 $(posters).each(function(index){
-                        var ClubName = posters[index].gsx$clubname.$t;
-                        var PosterTitle = posters[index].gsx$postertitle.$t;
-                        var PosterCaption = posters[index].gsx$postercaption.$t;
-                        var PosterDate = posters[index].gsx$posterdate.$t;
+                        var HostName = posters[index].gsx$hostname.$t;
+                        var EventName = posters[index].gsx$eventname.$t;
+                        var EventDesc = posters[index].gsx$eventdesc.$t;
+                        var EventDate = posters[index].gsx$eventdate.$t;
+                        var EventTime = posters[index].gsx$eventtime.$t;
+                        var EventLoc = posters[index].gsx$eventloc.$t;
                         var PosterID = posters[index].gsx$posterid.$t;
-                        var PosterApproved = posters[index].gsx$approved.$t;
+                        var Approved = posters[index].gsx$approved.$t;
                         
-                        var splitdate = PosterDate.split("/");
-                        var PosterDateMonth = pad(splitdate[0], 2);
-                        var PosterDateDay = pad(splitdate[1], 2);
-                        var PosterDateYear = splitdate[2];
+                        var splitdate = EventDate.split("/");
+                        var EventDateMonth = pad(splitdate[0], 2);
+                        var EventDateDay = pad(splitdate[1], 2);
+                        var EventDateYear = splitdate[2];
                         
-                        //console.log(ClubName);
-                        //console.log(PosterTitle);
-                        //console.log(PosterCaption);
-                        //console.log(PosterDate);
-                        //console.log(PosterID);
-                        //console.log(PosterDateDay);
-                        //console.log(PosterDateMonth);
-                        //console.log(PosterDateYear);
+                        console.log(HostName);
+                        console.log(EventName);
+                        console.log(EventDesc);
+                        console.log(EventDate);
+                        console.log(EventTime);
+                        console.log(EventLoc);
+                        console.log(PosterID);
+                        console.log(Approved);
                         
-                        if(sortByDate([parseInt(PosterDateDay), parseInt(PosterDateMonth), parseInt(PosterDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && PosterApproved.toLowerCase() == "y")
+                        if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y")
                         {
-                                ToBePosted.push([ClubName, PosterTitle, PosterCaption, PosterDateYear, PosterDateMonth, PosterDateDay, PosterID]);
+                                ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventLoc, EventDate]);
                         }
                         
                 });
@@ -165,7 +167,12 @@ $( document ).ready(function(){
                 var clublist = [];
                 var weeklist = [];
                 $(ToBePosted).each(function(index){
-                        var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
+                        
+                        $("#table tr:last").after("<tr><td>"+ToBePosted[index][9]+"</td><td><a href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td>"+ToBePosted[index][1]+"</td><td>"+ToBePosted[index][0]+"</td><td>"+ToBePosted[index][2]+"</td><td>"+ToBePosted[index][7]+"</td><td>"+ToBePosted[index][8]+"</td></tr>");
+                        
+                        console.log("<tr><td>"+ToBePosted[index][9]+"</td><a href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td>"+ToBePosted[index][1]+"</td><td><td>"+ToBePosted[index][0]+"</td><td>"+ToBePosted[index][2]+"</td><td>"+ToBePosted[index][7]+"</td><td>"+ToBePosted[index][8]+"</td><td></tr>");
+                    
+                        /*var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
                         if(datelist.indexOf(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2)) == -1)
                         {
                                 $("#isowall").append("<div id=\"datetip"+index+"\" class=\"mitem sorttip datetip\" data-date=\""+namedate.getFullYear()+pad(namedate.getMonth()+1, 2)+pad(namedate.getDate(), 2)+"\" data-precedence=\"a\"><p>"+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+"<p></div>");
@@ -185,9 +192,10 @@ $( document ).ready(function(){
                         {
                                 $("#isowall").append("<div id=\"clubtip"+index+"\" class=\"mitem sorttip clubtip\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"a\"><p>"+ToBePosted[index][0]+"<p></div>");
                                 clublist.push(ToBePosted[index][0]);
-                        }
+                        }*/
                 });
                 
+                /*
                 $(ToBePosted).each(function(index){
                         
                         var sizes = ["mitem-small", "mitem-medium", "mitem-medium"];
@@ -259,6 +267,7 @@ $( document ).ready(function(){
                                 _gaq.push(["_trackEvent", "RemindMe-Click", "Click", "PosterID "+ToBePosted[index][6]+" ("+ToBePosted[index][0]+")"]);
                         });
                 });
+                */
 
         });
         

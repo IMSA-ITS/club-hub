@@ -39,42 +39,48 @@
                                 //$("#bigthingstyle").attr("href", "/clubhub/meta/bigthingmobile.css");
                         }*/
                 </script>
-	</head>
+                
+                <!--[if !IE 7]>
+                        <style type="text/css">
+                                #wrap {display:table;height:100%}
+                        </style>
+                <![endif]-->
+            </head>
 	<body>
-		<div class="branding-box">
-			<a href="/clubhub"><img id="club-logo" src="media/Club_Hub_Branding.png" alt="Club Hub"/></a>
-			<h1><i>What's the Next Big Thing at IMSA?</i></h1>
-		</div>
-		
-		<!--<div id="main-menu" class="menu"></div>-->
-		
-		<div id="main-body">
-			<div class="body-box">
-			        <div class="protip protip-green" id="speedysurvey"></div>
-			        <div class="protip"><p>Protip: Click on a poster for more information.</p></div>
-			        <div class="buttonbar">
-			                <div id="sorts" class="button-group">
-			                        <button class="button viewtoggle is-checked" data-sort-value="week">Week View</button>
-			                        <button class="button viewtoggle" data-sort-value="date">Date View</button>
-                                                <button class="button viewtoggle" data-sort-value="clubs">Club View</button>
-                                                <button class="button viewtoggle" data-sort-value="quick">Summary View</button>
+		<div id="wrap">
+                    <div id="main">
+                        <div class="branding-box">
+                                <a href="/clubhub"><img id="club-logo" src="media/Club_Hub_Branding.png" alt="Club Hub"/></a>
+                        </div>
+                        
+                        <!--<div id="main-menu" class="menu"></div>-->
+                        
+                        <div id="main-body">
+                                <div class="body-box">
+                                        <div class="protip"><p>IMSA's events are sorted sequentially below. Click on the categories to sort according to them. Click on a host name, date, or location to filter by those events. Click on a poster to view its full size. Click on the event time to set up an email reminder for the event.</p></div>
+                                        <div>
+                                            <table id="table">
+                                                <tr>
+                                                    <th class="table-info">Date</th>
+                                                    <th class="table-poster">Poster</th>
+                                                    <th class="table-name">Event</th>
+                                                    <th class="table-name">Host</th>
+                                                    <th class="table-long">Description</th>
+                                                    <th class="table-info">Time</th>
+                                                    <th class="table-info">Location</th>
+                                                </tr>
+                                            </table>
                                         </div>
-                                        <div id="menubuttons" class="button-group">
-                                                <a href="http://imsaundefined.org/clubhub/submit"><button class="button" id="submit-link">Submit a Poster</button></a>
-                                                <a href="/projects/clubhub"><button class="button" id="imsaundefined-link">About this Project</button></a>
-                                        </div>               
+                                        <div class="protip protip-green"><p>How are we doing? <a href="https://docs.google.com/forms/d/1yUp5F4jKBYsjFrFXqSQl3fHo9M8RALEqRhogvSnZba4/viewform?usp=send_form">Feedback Form (for Clubs)</a> <a href="https://docs.google.com/forms/d/1L0bRg58otPibw8Pv8dufQ0mGN9dJmEKtlt7Kyg38rVc/viewform?usp=send_form">Feedback Form (for Students)</a></p></div>
+                                        
+                                        <div class="css-button"><a href="https://script.google.com/macros/s/AKfycbybTeA-J2c6BOz0XRICgaJnHCjwpGhG-0PmATU0lcmUfNc_VLk/exec" target="_blank"><div>Register an Event</div></a></div>
+                                        
+                                        <div class="protip protip-clear" style="background-color: rgba(0,0,0,0)"><p>Club Hub version 2.0.0</p></div>
+                                        
                                 </div>
-                                <div class="wall">
-                                        <div id="isowall" class="isotope">
-                                                <!--<div id="isowall1" class="mitem large" value="1">
-                                                        <a class="fancybox" rel="gallery1" href=""><img src=""></a>
-                                                </div>-->
-                                        </div>
-                                </div>
-                                <div class="protip protip-green"><p>How are we doing? <a href="https://docs.google.com/forms/d/1HMsf5ahCQivuczPrtqGjojj3NmZ8xxtKTNpNFz5J614/viewform?usp=send_form">Feedback Form (for Clubs)</a> <a href="https://docs.google.com/forms/d/10h9SFEC7zsQv_teze6dOfSI168qGP8z4Ef3oLrz6Z6Q/viewform?usp=send_form">Feedback Form (for Students)</a><p></div>
-                                <div class="protip protip-clear" style="background-color: rgba(0,0,0,0)"><p>Club Hub version 0.3.3</p></div>
-			</div>
-			<div class="footer"></div>
-		</div>
+                        </div>
+                    </div>
+                </div>
+                <div id="footer"></div>
 	</body>
 </html>
