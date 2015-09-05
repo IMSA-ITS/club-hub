@@ -22,24 +22,49 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 })();
 
 $( document ).ready(function(){                     
-    	//What's the Next Big Thing at IMSA? Animation
-    	//$(".branding-box h1").animate({"left": 0, "opacity": 1}, 3000);
-
-        //Smooth scrolling sections
-        /*$(function() {
-                $('a[href*=#]:not([href=#])').click(function() {
-                        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
-                                var target = $(this.hash);
-                                target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
-                                if (target.length) {
-                                        $('html,body').animate({
-                                                  scrollTop: target.offset().top
-                                        }, 1000);
-                                        return false;
-                                }
-                        }
-                });
-        });*/
+        
+        function humanReadable(word)
+        {
+             var dictionary = { 
+                  "data-date": "Date",
+                  "data-time": "Time",
+                  "data-host": "Host",
+                  "data-genloc": "General Location",
+                  "1501":"1501",
+                  "1502":"1502",
+                  "1503":"1503",
+                  "1504":"1504",
+                  "1505":"1505",
+                  "1506":"1506",
+                  "1507":"1507",
+                  "1508":"1508",
+                  "awing":"A-Wing Classrooms",
+                  "bwing":"B-Wing Classrooms",
+                  "acpit":"AC Pit",
+                  "msarea":"Math/Study Area",
+                  "tvpit":"TV Pit",
+                  "irc":"IRC",
+                  "sodexo":"Sodexo",
+                  "oldcafe":"Old Cafe",
+                  "science":"Science Atrium",
+                  "music":"Music Wing",
+                  "union":"Student Union",
+                  "lecture":"Lecture Hall",
+                  "auditorium":"Auditorium",
+                  "mgym":"Main Gym",
+                  "wgym":"West Gym",
+                  "outside":"Outside",
+                  "other":"Other"
+             };
+             if(word in dictionary)
+             {
+               return dictionary[word];
+             }
+             else return word;
+        }
+        
+        $("#clear-filters").hide();
+        $("#filterlist").hide();
         
         function sortByDate(dateArray1, dateArray2)
         {
@@ -90,20 +115,6 @@ $( document ).ready(function(){
                 return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
         }
         
-        function getWeekStart(d) {
-                d = new Date(d);
-                var day = d.getDay(),
-                diff = d.getDate() - day;
-                return new Date(d.setDate(diff));
-        }
-        
-        function getWeekEnd(d) {
-                d = new Date(d);
-                var day = d.getDay(),
-                diff = d.getDate() + (6 - day);
-                return new Date(d.setDate(diff));
-        }
-        
         function urlify(text) {
                 var urlRegex = /(https?:\/\/[^\s]+)/g;
                 return text.replace(urlRegex, function(url) {
@@ -125,9 +136,7 @@ $( document ).ready(function(){
 
         var PosterSpreadsheetKey = "1IDfn6Pl87E1hTDtZFuYswUJrESCIwYtn0QGgvN6ZsQs";
         var PosterFolderKey = "0B_vROCev3947fkNNdlVVUGpHVDgtSHNUZURtbS1wMXBfZlpJQkhaZ1JHcW8wbmxZcnEzbTQ";
-        //console.log("HEY");
         $.getJSON("https://spreadsheets.google.com/feeds/list/"+PosterSpreadsheetKey+"/od6/public/values?alt=json", function(data){
-                //console.log(data);
                 
                 //default view
                 var defaultview = "week";
@@ -146,8 +155,10 @@ $( document ).ready(function(){
                         var EventDesc = posters[index].gsx$eventdesc.$t;
                         var EventDate = posters[index].gsx$eventdate.$t;
                         var EventTime = posters[index].gsx$eventtime.$t;
+                        var EventGenLoc = posters[index].gsx$eventgenerallocation.$t;
                         var EventLoc = posters[index].gsx$eventloc.$t;
                         var PosterID = posters[index].gsx$posterid.$t;
+                        var PosterExists = posters[index].gsx$posterexists.$t;
                         var Approved = posters[index].gsx$approved.$t;
                         
                         var splitdate = EventDate.split("/");
@@ -155,18 +166,9 @@ $( document ).ready(function(){
                         var EventDateDay = pad(splitdate[1], 2);
                         var EventDateYear = splitdate[2];
                         
-                        /*console.log(HostName);
-                        console.log(EventName);
-                        console.log(EventDesc);
-                        console.log(EventDate);
-                        console.log(EventTime);
-                        console.log(EventLoc);
-                        console.log(PosterID);
-                        console.log(Approved);*/
-                        
                         if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y")
                         {
-                                ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventLoc, EventDate]);
+                                ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists]);
                         }
                         
                 });
@@ -178,127 +180,93 @@ $( document ).ready(function(){
                 var datelist = [];
                 var clublist = [];
                 var weeklist = [];
+                
+                var filterlist = {};
+                
                 $(ToBePosted).each(function(index){
                         
+                        var PosterExists = ToBePosted[index][11];
+                        
                         var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
-                        $("#table tbody").append("<tr><td>"+namedate.getDayName()+",<br />"+ToBePosted[index][9]+"</td><td><a class=\"fancybox\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img class=\"poster-img\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td class=\"remindme\"><a class=\"remindme-link\" href=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\" target=\"_blank\">"+ToBePosted[index][1]+"</a></td><td>"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td>"+tConvert(ToBePosted[index][7])+"</td><td>"+ToBePosted[index][8]+"</td></tr>");
-                        
-                        $(".poster-img").error(function(){
-                            $(this).attr("src", "");
-                            $(this).hide();
-                            $(this).parent("a").attr("href", "");
-                        });
-                    
-                        /*var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);                        
-                        if(datelist.indexOf(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2)) == -1)
+                        if(PosterExists=="TRUE")
                         {
-                                $("#isowall").append("<div id=\"datetip"+index+"\" class=\"mitem sorttip datetip\" data-date=\""+namedate.getFullYear()+pad(namedate.getMonth()+1, 2)+pad(namedate.getDate(), 2)+"\" data-precedence=\"a\"><p>"+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+"<p></div>");
-                                datelist.push(namedate.getFullYear()+pad(namedate.getMonth(), 2)+pad(namedate.getDate(), 2));
+                              var postercode = "<a class=\"fancybox\" rel=\"posters\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img class=\"poster-img\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a>";
                         }
-                        
-                        var weekdate = getWeekStart(namedate);
-                        var weekenddate = getWeekEnd(namedate);
-                        //console.log(weekenddate);
-                        if(weeklist.indexOf(weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2)) == -1)
+                        else
                         {
-                                $("#isowall").append("<div id=\"weektip"+index+"\" class=\"mitem sorttip weektip\" data-week=\""+weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2)+"\" data-date=\""+weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate()+1, 2)+"\" data-precedence=\"a\"><p>Week of "+weekdate.getMonthName()+" "+weekdate.getDate()+", "+weekdate.getFullYear()+" - "+weekenddate.getMonthName()+" "+weekenddate.getDate()+", "+weekenddate.getFullYear()+"<p></div>");
-                                weeklist.push(weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2));
+                              var postercode = "";
                         }
-                        
-                        if(clublist.indexOf(ToBePosted[index][0]) == -1)
-                        {
-                                $("#isowall").append("<div id=\"clubtip"+index+"\" class=\"mitem sorttip clubtip\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"a\"><p>"+ToBePosted[index][0]+"<p></div>");
-                                clublist.push(ToBePosted[index][0]);
-                        }*/
+                        $("#table tbody").append("<tr data-date=\""+ToBePosted[index][10]+"\" data-host=\""+ToBePosted[index][0]+"\" data-time=\""+ToBePosted[index][7]+"\" data-genloc=\""+ToBePosted[index][8]+"\"><td class=\"date clickable\" data-date=\""+ToBePosted[index][10]+"\">"+namedate.getDayName()+"<br />"+ToBePosted[index][10]+"</td><td>"+postercode+"</td><td class=\"remindme clickable\" data-link=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\">"+ToBePosted[index][1]+"</td><td class=\"host clickable\">"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"time clickable\">"+tConvert(ToBePosted[index][7])+"</td><td class=\"clickable location\">"+ToBePosted[index][9]+"</td></tr>");
                 });
                 
                 $("#table").tablesorter({
                         headers: {
                             1: { sorter: false },
                             4: { sorter: false }
+                        },
+                        textExtraction: function(contents){
+                              if($(contents).attr("class")=="data")
+                              {
+                                   return $(contents).attr("data-date");
+                              }
+                              else if($(contents).attr("class")=="remindme")
+                              {
+                                   return $("a", $(contents)).html();
+                              }
+                              else
+                              {
+                                   return contents.innerHTML;
+                              }
                         }
                 });
                 
                 $(".description").readmore({
                     speed: 200,
-                    moreLink: '<a href="#">Show more...</a>',
-                    lessLink: '<a href="#">...Show less.</a>',
+                    moreLink: '<a href="#">Show more</a>',
+                    lessLink: '<a href="#">Show less</a>',
                     blockCSS: 'display: block; width: 100%;'
                 });
                 
-                /*
-                $(ToBePosted).each(function(index){
-                        
-                        var sizes = ["mitem-small", "mitem-medium", "mitem-medium"];
-                        function getSizeLayout(index){
-                                var size_layout = [2, 2, 2, 2, 2, 1, 1, 2, 1, 1, 1, 1, 2, 0, 0, 0, 0, 0, 1];
-                                if(index < size_layout.length)
-                                {
-                                        return size_layout[index];
-                                }
-                                else
-                                {
-                                        return 0;
-                                }
-                        }
-                        
-                        var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
-                        var weekdate = getWeekStart(namedate);
-                        
-                        $("#isowall").append("<div id=\"isopost"+index+"\" class=\"mitem\" value=\""+index+"\" data-date=\""+namedate.getFullYear()+pad(namedate.getMonth()+1, 2)+pad(namedate.getDate(), 2)+"\" data-club=\""+ToBePosted[index][0]+"\" data-precedence=\"b\" data-week=\""+weekdate.getFullYear()+pad(weekdate.getMonth(), 2)+pad(weekdate.getDate(), 2)+"\"><a class=\"fancybox\" rel=\"gallery1\" href=\"\"><img src=\"\"></a></div>");
-
-                        var remindmesite = "https://sites.google.com/site/postedservice/remindme";
-                        var thisid = "#isopost"+index;
-                        
-                        $(thisid).children("a").attr("href", "https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]);
-                        $(thisid).children("a").attr("title", "Click for more info.");
-                        $(thisid).children("a").attr("caption", "<h1>"+ToBePosted[index][1]+"</h1><p>"+urlify(ToBePosted[index][2])+"<br /><br />("+ToBePosted[index][0]+": "+namedate.getDayName()+", "+namedate.getMonthName()+" "+namedate.getDate()+", "+namedate.getFullYear()+")</p><div class=\"remindme\"><b><a class=\"remindmelink\" href=\""+remindmesite+"?posterid="+ToBePosted[index][6]+"\">Remind me about this event</a></b></div>");
-                        $(thisid).children("a").children("img").attr("src", "https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]);
-                        $(thisid).children("a").children("img").attr("alt", "The Next Big Thing");
-                        $(thisid).children("a").children("img").error(function(){
-                                $(thisid).attr("src", "/clubhub/media/DefaultSquare.png");
-                                $(thisid).parent().attr("href", "/clubhub/media/DefaultSquare.png");
+                $("#clear-filters").click(function(){
+                         filterlist = {};
+                        $("#table tbody tr").each(function(){
+                              $(this).show();
                         });
-                        
-                        $(thisid).children("a").children("img").load(function(){
-                                //Dynamically scale posters so that they are visually appealing.
-                                //Wide posters get this treatment!
-                                var posterratio = $(thisid).children("a").children("img").width()/$(thisid).children("a").children("img").height();
-                                if(posterratio > 1)
-                                {
-                                        if(posterratio > 2)
-                                        {
-                                                $(thisid).addClass(sizes[getSizeLayout(index)]+"-very-wide");
-                                                //$(thisid).height($(thisid).children("a").children("img").height());
-                                                
-                                        }
-                                        else
-                                        {
-                                                $(thisid).addClass(sizes[getSizeLayout(index)]+"-wide");
-                                                $(thisid).children("a").children("img").height($(thisid).height());
-                                                //$(thisid).children("a").children("img").css("width", $(thisid).children("a").children("img").width());     
-                                        }
-                                }
-                                else
-                                {
-                                        $(thisid).addClass(sizes[getSizeLayout(index)]);
-                                }
-                                
-                                updateIsowall();
-                                changeView(defaultview);
-                        });
-                        
-                        
-                        $(thisid).children("a").click(function(){
-                                //console.log(value);
-                                _gaq.push(["_trackEvent", "ClubBox-Click", "Click", "PosterID "+ToBePosted[index][6]+" ("+ToBePosted[index][0]+")"]);
-                        });
-                        
-                        $(thisid+".remindmelink").click(function(){
-                                _gaq.push(["_trackEvent", "RemindMe-Click", "Click", "PosterID "+ToBePosted[index][6]+" ("+ToBePosted[index][0]+")"]);
-                        });
+                        $("#filterlist").slideUp(200, function(){$(this).empty();});
+                        $(this).slideUp(200);
                 });
-                */
+                
+                function filter(attribute, value)
+                {
+                    if(filterlist[attribute]!=value)
+                    {
+                         filterlist[attribute]=value;
+                         $("#table tbody tr:visible").each(function(){
+                              if($(this).attr(attribute)!=value)
+                              {
+                                   $(this).hide();
+                              }
+                         });
+                         $("#filterlist").slideUp(100, function(){ $(this).append("<div class=\"info-bubble\">"+humanReadable(attribute)+": "+humanReadable(value)+"</div>");}).slideDown(200);
+                         $("#clear-filters").slideDown(200);
+                    }
+               }
+                
+               $(".date").click(function(){
+                    filter("data-date", $(this).parent("tr").attr("data-date"));
+               });
+               $(".host").click(function(){
+                    filter("data-host", $(this).parent("tr").attr("data-host"));
+               });
+               $(".time").click(function(){
+                    filter("data-time", $(this).parent("tr").attr("data-time"));
+               });
+               $(".location").click(function(){
+                    filter("data-genloc", $(this).parent("tr").attr("data-genloc"));
+               });
+               $(".remindme").click(function(){
+                    window.open($(this).attr("data-link"));
+             });
 
         });
         
@@ -309,89 +277,15 @@ $( document ).ready(function(){
                 type: "image",
                 openEffect: "elastic",
                 closeEffect: "fade",
+                helpers: {
+                   overlay: {
+                     locked: false
+                   }
+                 }
         });
         
- /*       $(".menu").hover(function(){
-                $(this).css("z-index", "3");
-                //console.log("Hey");
-                $(this).width("12%");
-        }, function(){
-                $(this).css("z-index", "1");
-                $(this).width("2%");
-        });
-        
-        $('.viewtoggle').click(function() {
-                $('.isotope').isotope('updateSortData').isotope();
-
-                var sortValue = $(this).attr('data-sort-value');
-                changeView(sortValue);
-                
-                _gaq.push(["_trackEvent", "View-Select", "Selection", "View "+sortValue]);
-        });
-        
-        $('.button-group').each( function( i, buttonGroup ) {
-                var $buttonGroup = $( buttonGroup );
-                $buttonGroup.on( 'click', 'button', function() {
-                        $buttonGroup.find('.is-checked').removeClass('is-checked');
-                        $( this ).addClass('is-checked');
-                });
+        $(".css-button-link").click(function(){
+               window.open($(this).attr("data-link"));
         });
         
 });
-
-function changeView(sortValue)
-{
-        if(sortValue == "week")
-        {
-                $(".mitem").css("margin", "20px");
-                $(".isotope").isotope({ filter: '*:not(.sorttip:not(.weektip))' });
-                $(".isotope").isotope({ layoutMode: 'fitRows' });
-                $(".isotope").isotope({ sortBy: ['week', 'precedence', 'date'] });
-                
-        }
-        else if(sortValue == "date")
-        {
-                $(".mitem").css("margin", "20px");
-                $(".isotope").isotope({ filter: '*:not(.sorttip:not(.datetip))' });
-                $(".isotope").isotope({ layoutMode: 'fitRows' });
-                $(".isotope").isotope({ sortBy: ['date', 'precedence'] });
-                
-        }
-        else if(sortValue == "clubs")
-        {
-                $(".mitem").css("margin", "20px");
-                $(".isotope").isotope({ filter: '*:not(.sorttip:not(.clubtip))' });
-                $(".isotope").isotope({ layoutMode: 'fitRows' });
-                $(".isotope").isotope({ sortBy: ['clubs', 'precedence'] });
-                
-        }
-        else
-        {
-                $(".mitem").css("margin", "0px");
-                $(".isotope").isotope({ filter: ':not(.sorttip)' });
-                $(".isotope").isotope({ layoutMode: 'packery' });
-                $(".isotope").isotope({ sortBy: ['date', 'precedence'] });
-        }
-}    
-
-function updateIsowall() {
-  
-        $('.isotope').isotope({
-                itemSelector: '.mitem',
-                getSortData: {
-                        date: '[data-date]',
-                        week: '[data-week]',
-                        clubs: '[data-club]',
-                        precedence: '[data-precedence]',
-                },
-                sortBy : ['date', 'precedence'],
-                filter: ':not(.sorttip)',
-                layoutMode: 'packery',
-                packery: {
-                        gutter: 20
-                },
-                vertical: {
-                        horizontalAlignment: 0.5
-                }
-        });
-}*/

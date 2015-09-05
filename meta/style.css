@@ -60,7 +60,7 @@ h1, h2
 .body-box 
 {
 	margin: 0;
-	background-color: rgb(240,240,240);
+	background-color: rgb(230,230,230);
         padding: 2% 5%;
 	position: relative;
 	z-index: 2;
@@ -584,9 +584,14 @@ hr
     cursor: pointer;
 }
 
+.remindme.clickable:hover
+{
+    background-color: rgba(85,153,255,.2);
+}
+
 .clickable:hover
 {
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(80,80,80,.2);
 }
 
 /*Sort bar stuff*/
@@ -804,6 +809,30 @@ hr
 .css-button div:active
 {
     background-color: rgb(235,133,65);
+}
+
+#filterlist
+{
+     padding: 0 1% 1% 1%;
+     margin: 0 auto;
+}
+
+.info-bubble
+{
+    background-color: rgb(0, 182, 57);
+    color: white;
+    font-size: 1em;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 1em;
+    padding: 5px;
+    margin: 5px;
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none;
+    display: inline-block;
+    
 }
 
 #clubhub-info div
