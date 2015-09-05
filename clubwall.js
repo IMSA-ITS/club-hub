@@ -180,7 +180,8 @@ $( document ).ready(function(){
                 var weeklist = [];
                 $(ToBePosted).each(function(index){
                         
-                        $("#table tbody").append("<tr><td>"+ToBePosted[index][9]+"</td><td><a class=\"fancybox\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img class=\"poster-img\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td>"+ToBePosted[index][1]+"</td><td>"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"remindme\"><a class=\"remindme-link\" href=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\" target=\"_blank\">"+tConvert(ToBePosted[index][7])+"</a></td><td>"+ToBePosted[index][8]+"</td></tr>");
+                        var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
+                        $("#table tbody").append("<tr><td>"+namedate.getDayName()+",<br />"+ToBePosted[index][9]+"</td><td><a class=\"fancybox\" href=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"><img class=\"poster-img\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\"></a></td><td class=\"remindme\"><a class=\"remindme-link\" href=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\" target=\"_blank\">"+ToBePosted[index][1]+"</a></td><td>"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td>"+tConvert(ToBePosted[index][7])+"</td><td>"+ToBePosted[index][8]+"</td></tr>");
                         
                         $(".poster-img").error(function(){
                             $(this).attr("src", "");
@@ -310,7 +311,7 @@ $( document ).ready(function(){
                 closeEffect: "fade",
         });
         
-        $(".menu").hover(function(){
+ /*       $(".menu").hover(function(){
                 $(this).css("z-index", "3");
                 //console.log("Hey");
                 $(this).width("12%");
@@ -393,4 +394,4 @@ function updateIsowall() {
                         horizontalAlignment: 0.5
                 }
         });
-}
+}*/
