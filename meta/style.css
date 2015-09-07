@@ -90,9 +90,9 @@ h1, h2
 
 .protip.protip-clear
 {
-        background-color: none;
+        background-color: rgba(0,0,0,0);
         border: none;
-        color: black;
+        color: rgb(80,80,80);
 }
 
 .protip p, .protip a
