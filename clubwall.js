@@ -161,6 +161,11 @@ $( document ).ready(function(){
                         var PosterExists = posters[index].gsx$posterexists.$t;
                         var Approved = posters[index].gsx$approved.$t;
                         
+                        if(EventLoc == "")
+                        {
+                              EventLoc = humanReadable(EventGenLoc);
+                        }
+                        
                         var splitdate = EventDate.split("/");
                         var EventDateMonth = pad(splitdate[0], 2);
                         var EventDateDay = pad(splitdate[1], 2);
