@@ -196,7 +196,7 @@ $( document ).ready(function(){
                         {
                               var postercode = "";
                         }
-                        $("#table tbody").append("<tr data-date=\""+ToBePosted[index][10]+"\" data-host=\""+ToBePosted[index][0]+"\" data-time=\""+ToBePosted[index][7]+"\" data-genloc=\""+ToBePosted[index][8]+"\"><td class=\"date clickable\" data-date=\""+ToBePosted[index][10]+"\">"+namedate.getDayName()+"<br />"+ToBePosted[index][10]+"</td><td>"+postercode+"</td><td class=\"remindme clickable\" data-link=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\">"+ToBePosted[index][1]+"</td><td class=\"host clickable\">"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"time clickable\">"+tConvert(ToBePosted[index][7])+"</td><td class=\"clickable location\">"+ToBePosted[index][9]+"</td></tr>");
+                        $("#table tbody").append("<tr data-date=\""+ToBePosted[index][10]+"\" data-host=\""+ToBePosted[index][0]+"\" data-time=\""+ToBePosted[index][7]+"\" data-genloc=\""+ToBePosted[index][8]+"\"><td class=\"date clickable\" data-date=\""+ToBePosted[index][10]+"\">"+namedate.getDayName()+"<br />"+ToBePosted[index][10]+"</td><td>"+postercode+"</td><td class=\"remindme clickable\" data-link=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\">"+ToBePosted[index][1]+"</td><td class=\"host clickable\">"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"time clickable\" data-time=\""+ToBePosted[index][7]+"\">"+tConvert(ToBePosted[index][7])+"</td><td class=\"clickable location\">"+ToBePosted[index][9]+"</td></tr>");
                 });
                 
                 $("#table").tablesorter({
@@ -205,11 +205,15 @@ $( document ).ready(function(){
                             4: { sorter: false }
                         },
                         textExtraction: function(contents){
-                              if($(contents).attr("class")=="data")
+                              if($(contents).hasClass("date"))
                               {
                                    return $(contents).attr("data-date");
                               }
-                              else if($(contents).attr("class")=="remindme")
+                              else if($(contents).hasClass("time"))
+                              {
+                                   return $(contents).attr("data-time");
+                              }
+                              else if($(contents).hasClass("remindme"))
                               {
                                    return $("a", $(contents)).html();
                               }
