@@ -141,6 +141,15 @@ footer
 	vertical-align: middle;
 }
 
+.branding-box h1
+{
+     text-align: center;
+     margin-top: 0.5em 0 0 0;
+     font-size: 1.5em;
+     font-family: 'Roboto', sans;
+     font-weight: 300;
+}
+
 #club-logo 
 {	
 	width: 100%;
