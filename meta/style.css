@@ -681,6 +681,8 @@ hr
 #table
 {
     margin-bottom: 1%;
+    width: 100%;
+    table-layout: fixed;
 }
 
 #table th, #table td
