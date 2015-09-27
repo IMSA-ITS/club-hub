@@ -219,8 +219,12 @@ $( document ).ready(function(){
                 }).promise().done(function(){
                         var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
                         xhr.done(function(data){
-                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\""+data.data.image_url+"\"></div></div></div>");
-                            console.log(data.data.image_url);
+                            var src = data.data.image_url;
+                            if(src.indexOf("https://") < 1)
+                            {
+                                src = src.replace("http", "https");
+                            }
+                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\""+src+"\"></div></div></div>");
                             imp.init();                                
                             $(".poster").css("max-height", $("html").height()*.75);
                             $(".clubcard").css("width", $("html").width());
@@ -234,7 +238,12 @@ $( document ).ready(function(){
                     {
                         var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
                         xhr.done(function(data){
-                            $("#gifofthemoment").attr("src", data.data.image_url);
+                            var src = data.data.image_url;
+                            if(src.indexOf("https://") < 1)
+                            {
+                                src = src.replace("http", "https");
+                            }
+                            $("#gifofthemoment").attr("src", src);
                         });
                     }
                     if(counter > (ToBePosted.length+2)*5)
