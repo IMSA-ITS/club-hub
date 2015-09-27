@@ -217,29 +217,29 @@ $( document ).ready(function(){
 
                         $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
                 }).promise().done(function(){
-                        var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
-                        xhr.done(function(data){
-                            var src = data.data.image_url;
-                            if(src.indexOf("https://") < 1)
-                            {
-                                src = src.replace("http", "https");
-                            }
-                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\""+src+"\"></div></div></div>");
-                            imp.init();                                
-                            $(".poster").css("max-height", $("html").height()*.75);
-                            $(".clubcard").css("width", $("html").width());
-                            $(".clubcard").css("height", $("html").height());
-                        });                        
+                        $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><iframe id=\"gifofthemoment\" src=\"\"></iframe></div></div></div>");
+                        imp.init();                                
+                        $(".poster").css("max-height", $("html").height()*.75);
+                        $(".clubcard").css("width", $("html").width());
+                        $(".clubcard").css("height", $("html").height());
+                        $("#gifofthemoment").css("height", $("html").height());
                 });
                 
                 document.addEventListener('impress:stepenter', function(e){
-                    counter++;
-                    if(counter%(ToBePosted.length+2)*5 == 0)
+                    if(counter%(ToBePosted.length+1)*5 == 0)
                     {
-                        var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
+                        var xhr = $.get("https://api.giphy.com/v1/gifs/search?q="+tag+"&api_key=dc6zaTOxFJmzC");
                         xhr.done(function(data){
-                            var src = data.data.image_url;
-                            if(src.indexOf("https://") < 1)
+                            var cleangifs = [];
+                            for(i=0; i<data.data.length; i++)
+                            {
+                                if(data.data[i].rating == "g")
+                                {
+                                    cleangifs.push(data.data[i].embed_url);
+                                }
+                            }
+                            var src = cleangifs[Math.round(Math.random()*cleangifs.length)];
+                            if(src.indexOf("https://") < -1)
                             {
                                 src = src.replace("http", "https");
                             }
@@ -262,6 +262,7 @@ $( document ).ready(function(){
                             });
                         });
                     }
+                    counter++;
                 });
                 
                 $("#table").tablesorter({
