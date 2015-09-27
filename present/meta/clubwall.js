@@ -217,7 +217,7 @@ $( document ).ready(function(){
 
                         $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
                 }).promise().done(function(){
-                        var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
+                        var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
                         xhr.done(function(data){
                             $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\""+data.data.image_url+"\"></div></div></div>");
                             console.log(data.data.image_url);
@@ -232,7 +232,7 @@ $( document ).ready(function(){
                     counter++;
                     if(counter%(ToBePosted.length+2)*5 == 0)
                     {
-                        var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
+                        var xhr = $.get("https://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
                         xhr.done(function(data){
                             $("#gifofthemoment").attr("src", data.data.image_url);
                         });
