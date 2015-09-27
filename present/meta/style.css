@@ -119,7 +119,7 @@ h1, h2
 
 #clubhubinfo p
 {
-    color: color: rgb(80,80,80);
+    color: rgb(140,140,140);
 }
 
 #clubhubinfo img
@@ -144,4 +144,16 @@ h1, h2
     height: 20px;
     width: 100%;
     background-color: rgb(85,153,255);
+}
+
+.centered
+{
+    width: 50%;
+    padding-top: 10%;
+    margin: auto;
+}
+
+#gifofthemoment
+{
+    width: 100%;
 }

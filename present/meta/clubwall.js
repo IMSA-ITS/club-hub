@@ -196,6 +196,8 @@ $( document ).ready(function(){
                 
                 var filterlist = {};
                 
+                var tag = "happy"
+                
                 $(ToBePosted).each(function(index){
                         
                         var PosterExists = ToBePosted[index][11];
@@ -213,18 +215,29 @@ $( document ).ready(function(){
                         }
                         
 
-                        $("#impress").append("<div class=\"step\" data-x=\""+(index+1)*2000+"\" data-y=\""+(index+1)*2000+"\" data-z=\""+((index+1)*2000*-1)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
+                        $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
                 }).promise().done(function(){
-                        imp.init();                                
-                        $(".poster").css("max-height", $("html").height()*.75);
-                        $(".clubcard").css("width", $("html").width());
-                        $(".clubcard").css("height", $("html").height());
-                        
+                        var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
+                        xhr.done(function(data){
+                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\""+data.data.image_url+"\"></div></div></div>");
+                            console.log(data.data.image_url);
+                            imp.init();                                
+                            $(".poster").css("max-height", $("html").height()*.75);
+                            $(".clubcard").css("width", $("html").width());
+                            $(".clubcard").css("height", $("html").height());
+                        });                        
                 });
                 
                 document.addEventListener('impress:stepenter', function(e){
                     counter++;
-                    if(counter > ToBePosted.length+1)
+                    if(counter%(ToBePosted.length+2)*5 == 0)
+                    {
+                        var xhr = $.get("http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag="+tag);
+                        xhr.done(function(data){
+                            $("#gifofthemoment").attr("src", data.data.image_url);
+                        });
+                    }
+                    if(counter > (ToBePosted.length+2)*5)
                     {
                         document.location.href="/clubhub/present/";
                     }
@@ -234,7 +247,11 @@ $( document ).ready(function(){
                         var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 10000);
                         timing = setInterval(imp.next, duration);
                         $("#timerstat").css("backgroundColor", colors[counter%3]);
-                        $("#timerstat").animate({width: "100%"}, duration, "linear").animate({width: "0%"}, 100);
+                        $("#timerstat").animate({width: "100%"}, duration, "linear", function(){
+                            $(this).css("float", "right").animate({width: "0%"}, 200, function(){
+                                $(this).css("float", "none");
+                            });
+                        });
                     }
                 });
                 
