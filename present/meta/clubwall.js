@@ -235,7 +235,7 @@ $( document ).ready(function(){
                         if(counter > ToBePosted.length+2)
                         {
                             $.ajax({
-                                    url: "//" + window.location.host + "/clubhub/present?rand=" + Math.floor((1 + Math.random()) * 0x10000),
+                                    url: window.location.protocol + "//" + window.location.host + "/clubhub/present/?rand=" + Math.floor((1 + Math.random()) * 0x10000),
                                     type: "HEAD",
                                     timeout: 1000,
                                     success: function (response) {
@@ -320,25 +320,6 @@ $( document ).ready(function(){
                 }, 500);
                 console.log("HEY!");
             });
-            
-            function hostReachable() {
-
-                
-                // Handle IE and more capable browsers
-                var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
-                var status;
-
-                // Open new request as a HEAD to the root hostname with a random param to bust the cache
-                xhr.open( "HEAD", "//" + window.location.host + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
-
-                // Issue request and handle response
-                try {
-                    xhr.send();
-                    return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
-                } catch (error) {
-                    return false;
-                }
-            }
 
         });
 });
