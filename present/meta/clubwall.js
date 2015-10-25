@@ -217,7 +217,7 @@ $( document ).ready(function(){
 
                             $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
                     }).promise().done(function(){
-                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"\"></div></div></div>");
+                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*10)+".gif\"></div></div></div>");
                             imp.init();                                
                             $(".poster").css("max-height", $("html").height()*.75);
                             $(".clubcard").css("width", $("html").width());
@@ -226,12 +226,6 @@ $( document ).ready(function(){
                     });
                     
                     document.addEventListener('impress:stepenter', function(e){
-                        if(counter%(ToBePosted.length+2) == 0)
-                        {
-                            
-                            var src = "https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*10)+".gif";
-                            $("#gifofthemoment").attr("src", src);
-                        }
                         if(counter > ToBePosted.length+2)
                         {
                             $.ajax({
