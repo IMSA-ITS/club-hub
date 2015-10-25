@@ -24,7 +24,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
 $( document ).ready(function(){     
     
         var imp;
-        var counter = 0;
+        var counter = 1;
         var colors = ["rgb(255,85,85)", "rgb(85,153,255)", "rgb(15,207,77)"];
         
         //Load presentation js before running everything.
@@ -194,7 +194,6 @@ $( document ).ready(function(){
                     var datelist = [];
                     var clublist = [];
                     var weeklist = [];
-                    
                     var filterlist = {};
                     
                     var tag = "happy"
@@ -218,7 +217,7 @@ $( document ).ready(function(){
 
                             $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
                     }).promise().done(function(){
-                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"2000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"\"></div></div></div>");
+                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"\"></div></div></div>");
                             imp.init();                                
                             $(".poster").css("max-height", $("html").height()*.75);
                             $(".clubcard").css("width", $("html").width());
@@ -227,28 +226,37 @@ $( document ).ready(function(){
                     });
                     
                     document.addEventListener('impress:stepenter', function(e){
-                        if(counter%(ToBePosted.length+1)*5 == 0)
+                        if(counter%(ToBePosted.length+2) == 0)
                         {
                             
                             var src = "https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*10)+".gif";
                             $("#gifofthemoment").attr("src", src);
                         }
-                        if(counter > (ToBePosted.length+2)*5)
+                        if(counter > ToBePosted.length+2)
                         {
-                            document.location.href="/clubhub/present/";
-                        }
-                        else
-                        {
-                            if (typeof timing !== 'undefined') clearInterval(timing);
-                            var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 10000);
-                            timing = setInterval(imp.next, duration);
-                            $("#timerstat").css("backgroundColor", colors[counter%3]);
-                            $("#timerstat").animate({width: "100%"}, duration, "linear", function(){
-                                $(this).css("float", "right").animate({width: "0%"}, 200, function(){
-                                    $(this).css("float", "none");
-                                });
+                            $.ajax({
+                                    url: "//" + window.location.host + "/clubhub/present?rand=" + Math.floor((1 + Math.random()) * 0x10000),
+                                    type: "HEAD",
+                                    timeout: 1000,
+                                    success: function (response) {
+                                            console.log("Updating...");
+                                            document.location.href="/clubhub/present/";
+                                    },
+                                    error: function(error) {
+                                        console.log("Offline.")
+                                        $("#timer").css("backgroundColor", "rgb(255,200,200)");
+                                    }
                             });
                         }
+                        if (typeof timing !== 'undefined') clearInterval(timing);
+                        var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 2000);
+                        timing = setInterval(imp.next, duration);
+                        $("#timerstat").css("backgroundColor", colors[counter%3]);
+                        $("#timerstat").animate({width: "100%"}, duration, "linear", function(){
+                            $(this).css("float", "right").animate({width: "0%"}, 200, function(){
+                                $(this).css("float", "none");
+                            });
+                        });
                         counter++;
                     });
                     
@@ -312,5 +320,25 @@ $( document ).ready(function(){
                 }, 500);
                 console.log("HEY!");
             });
+            
+            function hostReachable() {
+
+                
+                // Handle IE and more capable browsers
+                var xhr = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" );
+                var status;
+
+                // Open new request as a HEAD to the root hostname with a random param to bust the cache
+                xhr.open( "HEAD", "//" + window.location.host + "/?rand=" + Math.floor((1 + Math.random()) * 0x10000), false );
+
+                // Issue request and handle response
+                try {
+                    xhr.send();
+                    return ( xhr.status >= 200 && (xhr.status < 300 || xhr.status === 304) );
+                } catch (error) {
+                    return false;
+                }
+            }
+
         });
 });
