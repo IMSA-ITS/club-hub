@@ -249,7 +249,7 @@ $( document ).ready(function(){
                             });
                         }
                         if (typeof timing !== 'undefined') clearInterval(timing);
-                        var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 2000);
+                        var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 10000);
                         timing = setInterval(imp.next, duration);
                         $("#timerstat").css("backgroundColor", colors[counter%3]);
                         $("#timerstat").animate({width: "100%"}, duration, "linear", function(){
