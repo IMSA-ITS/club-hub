@@ -27,6 +27,8 @@ $( document ).ready(function(){
         var counter = 1;
         var colors = ["rgb(255,85,85)", "rgb(85,153,255)", "rgb(15,207,77)"];
         
+        var ThisRatio = $(window).width()/$(window).height();
+        
         //Load presentation js before running everything.
         $.getScript("/clubhub/present/meta/impress.js", function(){
             
@@ -143,6 +145,13 @@ $( document ).ready(function(){
                 return time.join (''); // return adjusted time or original string
             }
 
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            
             var PosterSpreadsheetKey = "1IDfn6Pl87E1hTDtZFuYswUJrESCIwYtn0QGgvN6ZsQs";
             var PosterFolderKey = "0B_vROCev3947fkNNdlVVUGpHVDgtSHNUZURtbS1wMXBfZlpJQkhaZ1JHcW8wbmxZcnEzbTQ";
             $.getJSON("https://spreadsheets.google.com/feeds/list/"+PosterSpreadsheetKey+"/od6/public/values?alt=json", function(data){
@@ -158,6 +167,18 @@ $( document ).ready(function(){
                     var TodayMonth = d.getMonth()+1;
                     var TodayYear = d.getFullYear();
                     
+                    var ThisGroup = getParameterByName("group").toLowerCase();
+                    
+                    if(ThisGroup!="")
+                    {
+                        console.log("This display is set to show posters in group ["+ThisGroup+"].");
+                    }
+                    else
+                    {
+                        console.log("This display is set to show ALL posters.");
+                    }
+                    
+                    
                     $(posters).each(function(index){
                             var HostName = posters[index].gsx$hostname.$t;
                             var EventName = posters[index].gsx$eventname.$t;
@@ -170,6 +191,7 @@ $( document ).ready(function(){
                             var PosterExists = posters[index].gsx$posterexists.$t;
                             var Approved = posters[index].gsx$approved.$t;
                             var DisplayOpts = posters[index].gsx$options.$t;
+                            var DisplayGroup = posters[index].gsx$group.$t;
                             
                             if(EventLoc == "")
                             {
@@ -181,7 +203,7 @@ $( document ).ready(function(){
                             var EventDateDay = pad(splitdate[1], 2);
                             var EventDateYear = splitdate[2];
                             
-                            if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y" && DisplayOpts.search("noposter")==-1)
+                            if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y" && DisplayOpts.search("noposter")==-1 && (DisplayGroup.search(ThisGroup)!=-1 || DisplayGroup == "" || ThisGroup == ""))
                             {
                                     ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists, DisplayOpts]);
                             }
@@ -224,7 +246,8 @@ $( document ).ready(function(){
                             
                             if(ToBePosted[index][12].search("fullposter")!=-1)
                             {
-                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\">"+postercode+"</div></div>");
+                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><span class=\"helper\"></span>"+postercode+"</div></div>");
+                                
                             }
                             else
                             {
@@ -237,6 +260,20 @@ $( document ).ready(function(){
                             $(".clubcard").css("width", $("html").width());
                             $(".clubcard").css("height", $("html").height());
                             $("#gifofthemoment").css("height", $("html").height());
+                            
+                            $(".fullposter").load(function(){
+                                   
+                                    var poster = $(this);
+                                    console.log(poster.width()/poster.height()+" "+ThisRatio);
+                                    if(poster.width()/poster.height() > ThisRatio)
+                                    {
+                                        $(poster).addClass("fullposter-wide");
+                                    }
+                                    else
+                                    {
+                                        $(poster).addClass("fullposter-tall");
+                                    }
+                            });
                     });
                     
                     document.addEventListener('impress:stepenter', function(e){
@@ -248,7 +285,7 @@ $( document ).ready(function(){
                                     timeout: 1000,
                                     success: function (response) {
                                             console.log("Updating...");
-                                            document.location.href="/clubhub/present/";
+                                            document.location.href="/clubhub/present/?group="+ThisGroup;
                                     },
                                     error: function(error) {
                                         console.log("Offline.")

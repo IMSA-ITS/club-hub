@@ -51,7 +51,7 @@ h1, h2
 
 .clubcard
 {
-    min-height: 100%;
+    height: 100%;
     background-color: rgb(250,250,250);
     border-radius: 1%;
 }
@@ -103,17 +103,32 @@ h1, h2
     position: absolute;
     top: 20%;
     right: 5%;
-    font-size: 2em;
     max-width: 55%;
 }
 
 .clubcard .fullposter
 {
-    font-size: 2em;
-    height: 100%;
-    max-width: 100%;
-    margin: 0 auto;
     display: block;
+}
+
+.clubcard .fullposter.fullposter-wide
+{
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.clubcard .fullposter.fullposter-tall
+{
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+.clubcard .helper
+{
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 #clubhubinfo
