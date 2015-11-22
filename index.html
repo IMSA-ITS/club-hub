@@ -1,6 +1,8 @@
+<!-- Club Hub - An Automated Event Display Framework -->
 <!DOCTYPE HTML>
 <html>
 	<head>
+            <!-- Include style files, jQuery, the ClubWall javascript code, and other important libraries -->
             <title>Club Hub</title>
             <link rel="stylesheet" type="text/css" href="/clubhub/meta/style.css" />
             <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -11,6 +13,8 @@
             <script src="/clubhub/meta/speedysurvey.js"></script>
             <script src="/clubhub/meta/jquery.tablesorter.min.js"></script>
             <script src="/clubhub/meta/readmore.min.js"></script>
+
+	    <!-- Google Analytics snippet. Put your own tracking code here. -->
             <script>
                 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -20,6 +24,8 @@
                 ga('create', 'UA-55205533-9', 'auto');
                 ga('send', 'pageview');
             </script>
+
+            <!-- Put footer at bottom for IE -->
             <!--[if !IE 7]>
                 <style type="text/css">
                         #wrap {display:table;height:100%}
@@ -30,13 +36,18 @@
             <div id="wrap">
                 <div id="main">
                     <div class="branding-box">
+                            <!-- The logo in the header. Replace the href and src here if you want to customize them. -->
                             <a href="/clubhub"><img id="club-logo" src="/clubhub/media/Club_Hub_Branding.png" alt="Club Hub"/></a>
                     </div>             
                         <div id="main-body">
                             <div class="body-box">
                                 <div class="protip"><p><b>IMSA's events are sorted sequentially below.</b></p><p>Click on a poster to enlarge it. Click on the header to sort by those categories. Click on an event name to set up an email reminder.</p><p>Events are filterable, too: click on a date, host, time, or location to filter by those properties.</p></div>
+
+                                <!-- Button and lists used for filtering events. These show up when a filter is activated. -->
                                 <div class="css-button" id="clear-filters"><div>Clear All Filters</div></div>
                                 <div id="filterlist"></div>
+
+                              	<!-- The table of events itself. Items are appended here by clubwall.js. -->
                                 <div>
                                     <table id="table">
                                         <thead>
@@ -54,18 +65,25 @@
                                     </table>
                                 </div>
                                 
+                                <!-- Links underneath the table that go to surveys. Change the URLs if you'd like. -->
                                 <div class="protip protip-green"><p>How are we doing? <a href="https://docs.google.com/forms/d/1yUp5F4jKBYsjFrFXqSQl3fHo9M8RALEqRhogvSnZba4/viewform?usp=send_form">Feedback Form (for Clubs)</a> <a href="https://docs.google.com/forms/d/1L0bRg58otPibw8Pv8dufQ0mGN9dJmEKtlt7Kyg38rVc/viewform?usp=send_form">Feedback Form (for Students)</a></p></div>
                                 
+                                <!-- Disclaimer for use at the Illinois Mathematics and Science Academy. -->
                                 <div class="protip protip-clear"><p><i>Club Hub is an unofficial service. The events in this table may not necessarily have been approved by Student Life.</i></p></div>
                                 
+                                <!-- Button that links to the submission form. Change it to link to your own CHER installation. -->
                                 <div class="css-button"><div class="css-button-link" data-link="https://script.google.com/macros/s/AKfycbybTeA-J2c6BOz0XRICgaJnHCjwpGhG-0PmATU0lcmUfNc_VLk/exec">Register an Event</div></div>
                                 
+                                <!-- Button that links to the Club Hub about page. -->
                                 <div class="css-button" id="clubhub-info"><div class="css-button-link" data-link="/clubhub/about">Club Hub version 2.0.0</div></div>
                                     
                             </div>
                         </div>
                     </div>
                 </div>
+
+              	<!-- Copyright line. Please attribute the original source to George Moe and https://george.moe in some way.
+                     Example: Copyright &copy 2015 IMSA Student Council. Original framework by <a href="https://george.moe/">George Moe</a>. -->
                 <div id="footer">Copyright &copy George Moe 2015</div>
 	</body>
 </html>

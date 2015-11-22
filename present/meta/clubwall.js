@@ -1,3 +1,7 @@
+//present/clubwall.js - The Club Hub Automatic Slideshow Generator
+//Copyright (c) 2015 George Moe - See LICENSE for more details.
+
+//Event tracking with Google Analytics. Change to your own tracking code.
 var _gaq = _gaq || [];
 _gaq.push(['_setAccount', 'UA-55205533-9']);
 _gaq.push(['_trackPageview']);
@@ -8,6 +12,7 @@ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www')
 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 })();
 
+//Define some additions to Date objects to get the day of the week and the month of the year.
 (function() {
         var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
@@ -21,6 +26,7 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
         };
 })();
 
+//The main code
 $( document ).ready(function(){     
     
         var imp;
@@ -34,6 +40,7 @@ $( document ).ready(function(){
             
             imp = impress();
         
+            //A dictionary to convert internal codes to human-readable words.
             function humanReadable(word)
             {
                 var dictionary = { 
@@ -74,9 +81,11 @@ $( document ).ready(function(){
                 else return word;
             }
             
+            //Hide filter labels.
             $("#clear-filters").hide();
             $("#filterlist").hide();
             
+            //Function to chronologically compare two dates.
             function sortByDate(dateArray1, dateArray2)
             {
                     //dateArray in form [day, month, year]
@@ -111,6 +120,7 @@ $( document ).ready(function(){
                     }
             }
             
+            //Function to chronologically compare two posters.
             function sortPostersByDate(PosterArray1, PosterArray2)
             {
                     
@@ -120,19 +130,22 @@ $( document ).ready(function(){
                     return(sortByDate(dateArray1, dateArray2));
             }
             
+            //Function to pad strings with the specified number of zeroes (or another character).
             function pad(n, width, z) {
                     z = z || '0';
                     n = n + '';
                     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
             }
             
+            //Function to automatically link urls in a body of text.
             function urlify(text) {
                     var urlRegex = /(https?:\/\/[^\s]+)/g;
                     return text.replace(urlRegex, function(url) {
                             return '<a href="' + url + '">' + url + '</a>';
                     })
             }
-            
+
+            //Function to convert 24-hour time to 12-hour time.
             function tConvert (time) {
                 // Check correct time format and split into components
                 time = time.toString ().match (/^([01]*\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
@@ -145,6 +158,7 @@ $( document ).ready(function(){
                 return time.join (''); // return adjusted time or original string
             }
 
+            //Function to get url query strings.
             function getParameterByName(name) {
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
                 var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -152,12 +166,14 @@ $( document ).ready(function(){
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
             
+            //IMPORTANT!! ###############################################################
+            //Document IDs for the Master Event Registry (PosterSpreadsheetKey) and the Poster Repository (PosterFolderKey).
+	    //Change these to the ones you used in your backend!
             var PosterSpreadsheetKey = "1IDfn6Pl87E1hTDtZFuYswUJrESCIwYtn0QGgvN6ZsQs";
             var PosterFolderKey = "0B_vROCev3947fkNNdlVVUGpHVDgtSHNUZURtbS1wMXBfZlpJQkhaZ1JHcW8wbmxZcnEzbTQ";
+
+            //Get data from the Master Event Registry
             $.getJSON("https://spreadsheets.google.com/feeds/list/"+PosterSpreadsheetKey+"/od6/public/values?alt=json", function(data){
-                    
-                    //default view
-                    var defaultview = "week";
                     
                     var posters = data.feed.entry;
                     var ToBePosted = [];
@@ -179,6 +195,7 @@ $( document ).ready(function(){
                     }
                     
                     
+            	    //Get variables from the Master Event Registry
                     $(posters).each(function(index){
                             var HostName = posters[index].gsx$hostname.$t;
                             var EventName = posters[index].gsx$eventname.$t;
@@ -203,6 +220,7 @@ $( document ).ready(function(){
                             var EventDateDay = pad(splitdate[1], 2);
                             var EventDateYear = splitdate[2];
                             
+                            //If the poster date is not already passed, the poster is an approved poster, the poster is not opted-out of poster display, and the poster is in this display group, then queue it for display.
                             if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y" && DisplayOpts.search("noposter")==-1 && (DisplayGroup.search(ThisGroup)!=-1 || DisplayGroup == "" || ThisGroup == ""))
                             {
                                     ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists, DisplayOpts]);
@@ -212,38 +230,43 @@ $( document ).ready(function(){
                     
                     //Sort posters in chronological order
                     ToBePosted.sort(sortPostersByDate);
-                    //console.log(ToBePosted);
-                    
+
                     var datelist = [];
                     var clublist = [];
                     var weeklist = [];
                     var filterlist = {};
                     
-                    var tag = "happy"
-                    
+                    //Generate entries in the slideshow from the poster queue.
                     $(ToBePosted).each(function(index){
-                            
+
+                            //Get data on whether this event has a poster.
                             var PosterExists = ToBePosted[index][11];
                             
                             var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
+
+                            //If poster exists...
                             if(PosterExists=="TRUE")
                             {
+                                //And if the event host has requested a fullscreen poster, then set it to the fullscreen class.
                                 if(ToBePosted[index][12].search("fullposter")!=-1)
                                 {
                                     var postercode = "<img class=\"fullposter\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\">";
                                 }
+                                //Otherwise, treat it like a normal poster.
                                 else
                                 {
                                     var postercode = "<img class=\"poster\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\">";
                                 }
                                 var detailexpand = "";
                             }
+                            //If there is no poster, then don't generate an image tag for it.
                             else
                             {
                                 var postercode = "";
                                 var detailexpand = "style=\"width: 90%\"";
                             }
                             
+                            //Generate the slideshow by appending to the main document.
                             if(ToBePosted[index][12].search("fullposter")!=-1)
                             {
                                 $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><span class=\"helper\"></span>"+postercode+"</div></div>");
@@ -254,13 +277,21 @@ $( document ).ready(function(){
                                 $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
                             }
                     }).promise().done(function(){
+
+                            //Append a slide that pulls a funny gif from my gif folder.
+                            //Comment this out if you don't want it.
                             $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*20)+".gif\"></div></div></div>");
-                            imp.init();                                
+
+                            //Initialize the slideshow
+                            imp.init();
+
+                            //Set everything to the proper dimensions.
                             $(".poster").css("max-height", $("html").height()*.75);
                             $(".clubcard").css("width", $("html").width());
                             $(".clubcard").css("height", $("html").height());
                             $("#gifofthemoment").css("height", $("html").height());
                             
+                            //Correct the ratios of the fullscreen posters.
                             $(".fullposter").load(function(){
                                    
                                     var poster = $(this);
@@ -276,6 +307,9 @@ $( document ).ready(function(){
                             });
                     });
                     
+                    //Listen to when the slides change and to track the slideshow progress.
+                    //Use these events to set a timer for the slide.
+                    //When the step count exceeds a certain limit (indcating the age of the slideshow), refresh.
                     document.addEventListener('impress:stepenter', function(e){
                         if(counter > ToBePosted.length+2)
                         {
@@ -289,6 +323,9 @@ $( document ).ready(function(){
                                     },
                                     error: function(error) {
                                         console.log("Offline.")
+
+                                        //If the SUD can't connect to the internet, it will simply continue to show
+                                        //the slides it has. The progress bar will go red to indicate that it is in offline mode.
                                         $("#timer").css("backgroundColor", "rgb(255,200,200)");
                                     }
                             });
@@ -304,67 +341,6 @@ $( document ).ready(function(){
                         });
                         counter++;
                     });
-                    
-                    $("#table").tablesorter({
-                            headers: {
-                                1: { sorter: false },
-                                4: { sorter: false }
-                            },
-                            textExtraction: function(contents){
-                                if($(contents).hasClass("date"))
-                                {
-                                    return $(contents).attr("data-date");
-                                }
-                                else if($(contents).hasClass("time"))
-                                {
-                                    return $(contents).attr("data-time");
-                                }
-                                else if($(contents).hasClass("remindme"))
-                                {
-                                    return $("a", $(contents)).html();
-                                }
-                                else
-                                {
-                                    return contents.innerHTML;
-                                }
-                            }
-                    });
-                    
-                    $(".description").readmore({
-                        speed: 200,
-                        moreLink: '<a href="#">Show more</a>',
-                        lessLink: '<a href="#">Show less</a>',
-                        blockCSS: 'display: block; width: 100%;'
-                    });
-                    
-
             });
-            
-            $(".fancybox").fancybox({
-                    beforeLoad: function() {
-                        this.title = $(this.element).attr('caption');
-                    },
-                    type: "image",
-                    openEffect: "elastic",
-                    closeEffect: "fade",
-                    helpers: {
-                    overlay: {
-                        locked: false
-                    }
-                    }
-            });
-            
-            $(".css-button-link").click(function(){
-                window.open($(this).attr("data-link"));
-            });
-            
-            $("#table tbody tr").each(function(){
-                console.log("HO!!");
-                $('html, body').animate({
-                    scrollTop: $(this).offset().top
-                }, 500);
-                console.log("HEY!");
-            });
-
         });
 });

@@ -1,7 +1,11 @@
+/* The Club Hub Synchronized Universal Display Stylesheets */
+
+/* Import fonts */
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
+/* Set global styles */
 body, html
 {
 	height: 100%;
@@ -25,6 +29,7 @@ h1, h2
 	font-family: 'Roboto Slab', serif;
 }
 
+/* Logo styling */
 .branding-box 
 {
 	position: fixed;
@@ -151,6 +156,7 @@ h1, h2
     max-width: 100%;
 }
 
+/* Styling for the progress bar */
 #timer
 {
     position: fixed;
@@ -170,13 +176,14 @@ h1, h2
     background-color: rgb(85,153,255);
 }
 
+/* Stlying for the GIF slide */
+#gifofthemoment
+{
+    width: 100%;
+}
+
 .centered
 {
     width: 100%;
     margin: auto;
-}
-
-#gifofthemoment
-{
-    width: 100%;
 }

@@ -1,4 +1,6 @@
 //SpeedySurvey.js v0.1 - a simple survey that collects quick responses to single questions!
+//Integrates into Google Analytics for collecting user data.
+//This is not used by Club Hub.
 //Copyright (c) George Moe 2015
 
 var _gaq = _gaq || [];
