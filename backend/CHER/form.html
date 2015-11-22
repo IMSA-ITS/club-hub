@@ -1,0 +1,286 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons.css">
+<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+<style>
+
+*
+{
+ font-family: "Roboto", sans-serif;
+ font-weight: 300;
+ font-size: 1.01em;
+}
+
+body
+{
+ background-color: rgb(230,230,230);
+}
+
+.centerdiv
+{
+ width: 500px;
+ margin: 0 auto 1% auto;
+ padding: 0;
+}
+
+.centered
+{
+ text-align: center;
+}
+
+#theform
+{
+ width: 100%;
+ table-layout: fixed;
+}
+
+#theform td
+{
+ margin: 5%;
+ padding: 2%;
+ min-width: 100px;
+ vertical-align: middle;
+ width: 100%;
+}
+
+#theform tr td:first-child
+{
+ text-align: right;
+}
+
+footer
+{
+ margin-top: 10%;
+}
+.error, .important
+{
+ color:red;
+}
+
+.success
+{
+ color:green;
+}
+.header
+{
+ background-color: rgb(250,250,250);
+ text-align: center;
+ padding: 1%;
+ margin: 0;
+ color: rgb(80,80,80);
+}
+
+.header h1
+{
+ font-size: 1.8em;
+ color: rgb(80,80,80);
+}
+
+#problem-dialog
+{
+ display: none;
+ width: 500px;
+ border: 1px solid rgb(200,200,200);
+ background-color: white;
+ padding: 3px;
+ margin: 5px auto;
+ text-align: center;
+}
+
+.header a
+{
+ text-decoration: underline;
+}
+
+#branding-box
+{
+ margin: 2% auto;
+ width: 30%;
+}
+
+#branding-box img
+{
+ max-width: 100%;
+}
+
+/*Sticky Footer Code*/
+#wrap {min-height: 100%;}
+
+#main {overflow:auto;
+	padding-bottom: 50px;}  /* must be same height as the footer */
+
+#footer {
+        position: relative;
+	margin-top: -50px; /* negative value of footer height */
+	height: 50px;
+	clear:both;
+        text-align: center;
+        color: rgb(80,80,80);
+} 
+
+/*Opera Fix*/
+body:before {
+	content:"";
+	height:100%;
+	float:left;
+	width:0;
+	margin-top:-32767px;
+}
+/*End Sticky Footer*/
+
+.main-body
+{
+ background-color: rgb(230,230,230);
+ padding: 2%;
+ font-size: 1.1em;
+}
+
+.protip
+{
+        margin: 0% 0% 1% 0%;
+        height: auto;
+        background-color: rgb(250,250,250);
+        color: rgb(100,100,100);
+        border-radius: 5px;
+        padding: 0.5em;
+}
+
+.protip p, .protip a
+{
+        color: inherit;
+        text-align: center;
+        margin: 0.5em;
+}
+
+.protip.protip-green
+{
+        background-color: rgba(0, 182, 57, 0.3);
+        color: rgb(0, 100, 57);
+}
+
+</style>
+<script>
+function submissionResult(result) {
+    var div = document.getElementById("output");
+    toggle_visibility("uploading", false);
+    if(result=="good")
+    {
+         div = document.getElementById("pagediv")
+         div.innerHTML = "<p>Thank you! Your event was sucessfully submitted for approval.</p>";
+         div.className = "protip protip-green";
+    }
+    else if(result=="not full")
+    {
+         div.innerHTML = "<b>Some required fields are empty. Please fill them in.</b>";
+         div.className = "error";
+    }
+    else
+    {
+         div.innerHTML = "<b>Uh oh. Something went wrong. Please try again later.</b>";
+         div.className = "error";
+    }
+    
+}
+
+function toggle_visibility(id, visible) {
+    var e = document.getElementById(id);
+    if(!visible)
+      e.style.display = 'none';
+    else
+      e.style.display = 'block';
+}
+
+function submitForm()
+{
+    google.script.run.withSuccessHandler(submissionResult).processForm(document.getElementById('theform')); 
+    toggle_visibility('uploading', true);
+}
+
+$(document).ready(function(){
+     $("#problem-toggle").click(function(){
+          if($("#problem-dialog").css("display")=="none")
+          {
+               $("#problem-dialog").css("display", "block");
+          }
+          else
+          {
+               $("#problem-dialog").css("display", "none");
+          }
+     });
+});
+
+</script>
+</head>
+<body>
+<div id="wrap">
+<div id="main">
+<div class="header"><div id="branding-box"><a href="https://george.moe/clubhub"><img 
+src="https://george.moe/clubhub/media/Club_Hub_Branding.png"></a></div><h1><b>The Club Hub Event Registrator</b></h1></div>
+<div class="main-body">
+<div class="protip"><p>Use this form to submit your event to Club Hub. After you send us your submission, a Club Hub associate will review your event 
+for approval.</p></div>
+<div id="pagediv" class="centerdiv">
+<p class="important">*Required Fields</p>
+<form id="theform" name="theform">
+<table>
+<tr><td>Club Name:<font class="important">*</font></td><td><input type="text" name="hostname"></td></tr>
+<tr><td>Contact Email:<font class="important">*</font></td><td><input type="text" name="email"></td></tr>
+<tr><td>Event Name:<font class="important">*</font></td><td><input type="text" name="eventname"></td></tr>
+<tr><td>Event Description:<font class="important">*</font></td><td><textarea name="eventdesc" cols="50" rows="5"></textarea></td></tr>
+<tr><td>Date of Event:<font class="important">*</font></td><td><input type="date" name="eventdate"></td></tr>
+<tr><td>Time of Event:</td><td><input type="time" name="eventtime"></td></tr>
+<tr><td>General Location<font class="important">*</font>:</td><td>
+<select name="eventgenloc" form="theform">
+  <option value="unselected" selected>Select a location.</option>
+  <option value="1501">1501</option>
+  <option value="1502">1502</option>
+  <option value="1503">1503</option>
+  <option value="1504">1504</option>
+  <option value="1505">1505</option>
+  <option value="1506">1506</option>
+  <option value="1507">1507</option>
+  <option value="1508">1508</option>
+  <option value="awing">A-Wing Classrooms</option>
+  <option value="bwing">B-Wing Classrooms</option>
+  <option value="acpit">AC Pit</option>
+  <option value="msarea">Math/Study Area</option>
+  <option value="tvpit">TV Pit</option>
+  <option value="irc">IRC</option>
+  <option value="sodexo">Sodexo</option>
+  <option value="oldcafe">Old Cafe</option>
+  <option value="science">Science Atrium</option>
+  <option value="music">Music Wing</option>
+  <option value="union">Student Union</option>
+  <option value="lecture">Lecture Hall</option>
+  <option value="auditorium">Auditorium</option>
+  <option value="mgym">Main Gym</option>
+  <option value="wgym">West Gym</option>
+  <option value="outside">Outside</option>
+  <option value="other">Other</option>
+</select>
+</td></tr>
+<tr><td>Specific Location:</td><td><input type="text" name="eventloc"></td></tr>
+<tr><td>Group Tag:</td><td><input type="text" name="group"></td></tr>
+<tr><td>Options:</td><td><input type="checkbox" name="fullposter" value="fullposter">Fullscreen poster on Club Hub Slideshow<br/>
+     <input type="checkbox" name="noposter" value="noposter">Don't include in Club Hub Slideshow</td></tr>
+<tr><td>Poster File:</td><td><input id="imgInp" type="file" name="poster"></td></tr>
+<tr><td><input type="button" value="Submit" onclick="submitForm()" /></td><td><p id="uploading" style="display: none">Your event is being uploaded. 
+Please wait...</p></tr>
+</table>
+</form>
+<div id="output"></div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div class="header">
+     <p>Copyright &copy; George Moe 2015</p>
+     <a id="problem-toggle">Form not working?</a>
+     <div id="problem-dialog"><p>Oh no! If you think something is broken, please email <a href="mailto:gmoe@imsa.edu">gmoe@imsa.edu</a> right away! 
+You can also submit your poster and details to that address.</p></div>
+</div>
+</div>
+</body>
+</html>
+

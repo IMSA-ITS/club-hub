@@ -22,8 +22,9 @@ The cloned directory contains the following:
 
 Club Hub's frontend is divided into two parts: the main event listing and the Club Hub SUD.
 
-1. The main event listing can be found in the `frontend/`.
-2. The Club Hub SUD is located in the `frontend/present/` directory. It depends on a few items in `frontend/media`, so if it needs to be moved, then change the includes accordingly.
+1. The main event listing can be found in the root directory.
+2. The Club Hub SUD is located in the `present/` directory. It depends on a few items in `media/`, so if it needs to be moved, then change the includes accordingly.
+3. The backend Google App Script code can be found in the `backend/` directory.
 
 Install
 ----------------
@@ -41,7 +42,9 @@ Installing the backend:
 
 Installing the frontend:
 
-1. Move the contents of `frontend/` to a folder served by your webserver. Modify it, rebrand it, etc. to your liking...and then you're done!
+1. Move the contents of the root directory to a folder served by your webserver. Modify it, rebrand it, etc. to your liking...and then you're done!
+
+Protip: You might want to move `backend/` out of the served directory, since it is not used for anything there.
 
 Attribution
 ----------------
