@@ -107,6 +107,15 @@ h1, h2
     max-width: 55%;
 }
 
+.clubcard .fullposter
+{
+    font-size: 2em;
+    height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+}
+
 #clubhubinfo
 {
     width: 50%;

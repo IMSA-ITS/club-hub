@@ -169,6 +169,7 @@ $( document ).ready(function(){
                             var PosterID = posters[index].gsx$posterid.$t;
                             var PosterExists = posters[index].gsx$posterexists.$t;
                             var Approved = posters[index].gsx$approved.$t;
+                            var DisplayOpts = posters[index].gsx$options.$t;
                             
                             if(EventLoc == "")
                             {
@@ -180,9 +181,9 @@ $( document ).ready(function(){
                             var EventDateDay = pad(splitdate[1], 2);
                             var EventDateYear = splitdate[2];
                             
-                            if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y")
+                            if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y" && DisplayOpts.search("noposter")==-1)
                             {
-                                    ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists]);
+                                    ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists, DisplayOpts]);
                             }
                             
                     });
@@ -205,7 +206,14 @@ $( document ).ready(function(){
                             var namedate = new Date(ToBePosted[index][4]+"/"+ToBePosted[index][5]+"/"+ToBePosted[index][3]);
                             if(PosterExists=="TRUE")
                             {
-                                var postercode = "<img class=\"poster\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\">";
+                                if(ToBePosted[index][12].search("fullposter")!=-1)
+                                {
+                                    var postercode = "<img class=\"fullposter\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\">";
+                                }
+                                else
+                                {
+                                    var postercode = "<img class=\"poster\" src=\"https://googledrive.com/host/"+PosterFolderKey+"/"+ToBePosted[index][6]+"\">";
+                                }
                                 var detailexpand = "";
                             }
                             else
@@ -214,8 +222,14 @@ $( document ).ready(function(){
                                 var detailexpand = "style=\"width: 90%\"";
                             }
                             
-
-                            $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
+                            if(ToBePosted[index][12].search("fullposter")!=-1)
+                            {
+                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\">"+postercode+"</div></div>");
+                            }
+                            else
+                            {
+                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
+                            }
                     }).promise().done(function(){
                             $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*20)+".gif\"></div></div></div>");
                             imp.init();                                
