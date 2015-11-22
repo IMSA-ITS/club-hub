@@ -1,0 +1,189 @@
+/* The Club Hub Synchronized Universal Display Stylesheets */
+
+/* Import fonts */
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+/* Set global styles */
+body, html
+{
+	height: 100%;
+}
+
+body 
+{
+        background-size: 20%;
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-color: rgb(240,240,240);
+	font-family: 'Roboto', serif;
+	font-weight: 300;
+	font-size: 1em;
+	margin: 0%;
+	padding: 0%;
+}
+
+h1, h2 
+{
+	font-family: 'Roboto Slab', serif;
+}
+
+/* Logo styling */
+.branding-box 
+{
+	position: fixed;
+        bottom: 0;
+        right: 0;
+        width: 20%;
+        padding: 1% 2%;
+        z-index: 100;
+        text-align: center;
+}
+
+.branding-box p
+{
+    margin: 2%;
+}
+
+.branding-box img
+{
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+/*CLUB HUB PRESENT SLIDE STYLING*/
+
+.clubcard
+{
+    height: 100%;
+    background-color: rgb(250,250,250);
+    border-radius: 1%;
+}
+
+.clubcard .title
+{
+    position: absolute;
+    top: 0;
+    left: 5%;
+    font-size: 6em;
+    width: 50%;
+}
+
+.clubcard .host
+{
+    position: absolute;
+    top: 0;
+    right: 5%;
+    font-size: 4em;
+    font-family: "Roboto", sans;
+    font-weight: bold;
+    color: rgb(200,200,200);
+    text-transform: uppercase;
+    text-align: right;
+    width: 40%;
+}
+
+.clubcard .logis
+{
+    position: absolute;
+    font-family: "Roboto", sans;
+    top: 20%;
+    left: 5%;
+    font-size: 3em;
+    width: 30%;
+}
+
+.clubcard .detail
+{
+    position: absolute;
+    top: 50%;
+    left: 5%;
+    font-size: 1.5em;
+    width: 30%;
+}
+
+.clubcard .poster
+{
+    position: absolute;
+    top: 20%;
+    right: 5%;
+    max-width: 55%;
+}
+
+.clubcard .fullposter
+{
+    display: block;
+}
+
+.clubcard .fullposter.fullposter-wide
+{
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.clubcard .fullposter.fullposter-tall
+{
+    max-height: 100%;
+    margin: 0 auto;
+}
+
+.clubcard .helper
+{
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#clubhubinfo
+{
+    width: 50%;
+    font-size: 2em;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 10%;
+}
+
+#clubhubinfo p
+{
+    color: rgb(140,140,140);
+}
+
+#clubhubinfo img
+{
+    max-width: 100%;
+}
+
+/* Styling for the progress bar */
+#timer
+{
+    position: fixed;
+    z-index: 100;
+    bottom: 2%;
+    left: 2%;
+    height: 20px;
+    width: 20%;
+    background-color: rgb(200,200,200);
+}
+
+#timerstat
+{
+    z-index: 101;
+    height: 20px;
+    width: 100%;
+    background-color: rgb(85,153,255);
+}
+
+/* Stlying for the GIF slide */
+#gifofthemoment
+{
+    width: 100%;
+}
+
+.centered
+{
+    width: 100%;
+    margin: auto;
+}

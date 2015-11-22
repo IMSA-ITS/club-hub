@@ -1,0 +1,53 @@
+CLUB HUB 2.2.0 CHANGELOG
+==============================
+
+**Changes to the Club Hub Framework:**
+
++Now packaged and reorganized on Github so that other organizations can download and install it.
++Added comments to the entire codebase.
+
+**Changes to the Club Hub Website:**
+
++New Synchronized Universal Display page
++SUD now can create slideshows based on groups entered into CHER through use of the ?group= querystring.
++SUD can now create slides for fullscreen posters.
++SUD can now respect posters which have requested not to be included in the slideshow.
++SUD now has an offline mode that prevents it from refreshing (and therefore stopping) when there is no internet.
+	It waits until there is internet before it refreshes its content.
++IMSA website moved to https://clubhub.studco.org
++george.moe/clubhub replaced with a project description page with download links.
+
+**Changes to the Club Hub Event Registrator:**
+
++New fields for entry of email contact, group tags, and poster display options.
+
+
+CLUB HUB 2.0.0 CHANGELOG
+==============================
+
+**Changes to the Club Hub website:**
+
++Now under the george.moe domain.
++Entirely revamped layout, featuring a table of event details.
++New CSS focusing on a minimalistic style.
++New large and attractive button that opens the event registration page.
++Now able to display events without requiring a poster. The poster is displayed alongside event details and is enlargeable by clicking on it.
++Sorting allows the table to be organized by different properties.
++Filtering allows parts of the table to be hidden in order to bring focus to selected properties.
+>Significantly cleaned up the code.
+>Fixed a bug that caused high resource consumption.
+
+**Changes to the Club Hub Event Registrator:**
+
++Poster is no longer required.
++New CSS to match the main website's aesthetic.
++New time, location, and general location inputs for added event details.
+>More efficient administration backend.
+>Increased storage efficiency by detecting whether an image has been uploaded.
+
+**Changes to the Club Hub RemindMe! Service:**
+
++New CSS to match the main website's aesthetic.
++Improved email format.
+>Fixed a bug where non-existent images in the email would appear as broken links.
+>Fixed a bug where IDs were being stored as numbers rather than strings.
