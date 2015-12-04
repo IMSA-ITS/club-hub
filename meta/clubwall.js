@@ -134,12 +134,12 @@ $( document ).ready(function(){
         }
         
         //Function to automatically link urls in a body of text.
-        function urlify(text) {
+        /*function urlify(text) {
                 var urlRegex = /(https?:\/\/[^\s]+)/g;
                 return text.replace(urlRegex, function(url) {
                         return '<a href="' + url + '">' + url + '</a>';
                 })
-        }
+        }*/
         
         //Function to convert 24-hour time to 12-hour time.
         function tConvert (time) {
@@ -225,7 +225,8 @@ $( document ).ready(function(){
                         {
                               var postercode = "";
                         }
-                        $("#table tbody").append("<tr data-date=\""+ToBePosted[index][10]+"\" data-host=\""+ToBePosted[index][0]+"\" data-time=\""+ToBePosted[index][7]+"\" data-genloc=\""+ToBePosted[index][8]+"\"><td class=\"date clickable\" data-date=\""+ToBePosted[index][10]+"\">"+namedate.getDayName()+"<br />"+ToBePosted[index][10]+"</td><td>"+postercode+"</td><td class=\"remindme clickable\" data-link=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\">"+ToBePosted[index][1]+"</td><td class=\"host clickable\">"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"time clickable\" data-time=\""+ToBePosted[index][7]+"\">"+tConvert(ToBePosted[index][7])+"</td><td class=\"clickable location\">"+ToBePosted[index][9]+"</td></tr>");
+                        //$("#table tbody").append("<tr data-date=\""+ToBePosted[index][10]+"\" data-host=\""+ToBePosted[index][0]+"\" data-time=\""+ToBePosted[index][7]+"\" data-genloc=\""+ToBePosted[index][8]+"\"><td class=\"date clickable\" data-date=\""+ToBePosted[index][10]+"\">"+namedate.getDayName()+"<br />"+ToBePosted[index][10]+"</td><td>"+postercode+"</td><td class=\"remindme clickable\" data-link=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\">"+ToBePosted[index][1]+"</td><td class=\"host clickable\">"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+urlify(ToBePosted[index][2])+"</div></td><td class=\"time clickable\" data-time=\""+ToBePosted[index][7]+"\">"+tConvert(ToBePosted[index][7])+"</td><td class=\"clickable location\">"+ToBePosted[index][9]+"</td></tr>");
+                        $("#table tbody").append("<tr data-date=\""+ToBePosted[index][10]+"\" data-host=\""+ToBePosted[index][0]+"\" data-time=\""+ToBePosted[index][7]+"\" data-genloc=\""+ToBePosted[index][8]+"\"><td class=\"date clickable\" data-date=\""+ToBePosted[index][10]+"\">"+namedate.getDayName()+"<br />"+ToBePosted[index][10]+"</td><td>"+postercode+"</td><td class=\"remindme clickable\" data-link=\"https://script.google.com/macros/s/AKfycbyJxGCzHjDhJ_DphdB5xNfKPN1nl_YSSocFEm1thB8_YCfp_bZh/exec?posterid="+ToBePosted[index][6]+"\">"+ToBePosted[index][1]+"</td><td class=\"host clickable\">"+ToBePosted[index][0]+"</td><td><div class=\"description\">"+ToBePosted[index][2]+"</div></td><td class=\"time clickable\" data-time=\""+ToBePosted[index][7]+"\">"+tConvert(ToBePosted[index][7])+"</td><td class=\"clickable location\">"+ToBePosted[index][9]+"</td></tr>");
                 });
                 
                 //Setup TableSorter, a plugin to sort the entries in the table by header.
