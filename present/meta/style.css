@@ -2,6 +2,7 @@
 
 /* Import fonts */
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
@@ -63,10 +64,11 @@ h1, h2
 
 .clubcard .title
 {
+    font-family: "Roboto Condensed", sans-serif;
     position: absolute;
     top: 0;
     left: 5%;
-    font-size: 6em;
+    font-size: 4em;
     width: 50%;
 }
 
@@ -88,19 +90,19 @@ h1, h2
 {
     position: absolute;
     font-family: "Roboto", sans;
-    top: 20%;
+    top: 22.5%;
     left: 5%;
-    font-size: 3em;
+    font-size: 2em;
     width: 30%;
 }
 
 .clubcard .detail
 {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 5%;
-    font-size: 1.5em;
-    width: 30%;
+    font-size: 1.8em;
+    width: 40%;
 }
 
 .clubcard .poster
@@ -108,12 +110,12 @@ h1, h2
     position: absolute;
     top: 20%;
     right: 5%;
-    max-width: 55%;
+    max-width: 45%;
 }
 
 .clubcard .fullposter
 {
-    display: block;
+    display: inline-block;
 }
 
 .clubcard .fullposter.fullposter-wide

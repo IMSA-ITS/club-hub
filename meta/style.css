@@ -175,7 +175,11 @@ h1, h2
 #table, #table th, #table td
 {
     border-collapse: collapse;
-    padding: 1em;
+}
+
+#table td
+{
+    padding: 0.4em;
 }
 
 #table
@@ -186,11 +190,11 @@ h1, h2
     
 }
 
-
 #table th
 {
     color: white;
     background-color: rgb(80,80,80);
+    padding: 1em;
 }
 
 #table th.sortable
