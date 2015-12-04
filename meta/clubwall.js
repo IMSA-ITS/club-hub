@@ -80,23 +80,30 @@ $( document ).ready(function(){
                 //dateArray in form [day, month, year]
                 //console.log(dateArray1, dateArray2);
                 var greater = false;
-                if(dateArray1[2] > dateArray2[2])
+                var arraySize = 5;
+                
+                console.log(dateArray1, dateArray2);
+                
+                for(i = 0; i < arraySize; i++)
                 {
+                    if(dateArray1[i] > dateArray2[i])
+                    {
                         greater = true;
-                }
-                else if(dateArray1[2] == dateArray2[2])
-                {
-                        if(dateArray1[1] > dateArray2[1])
+                        break;
+                    }
+                    else if(dateArray1[i] == dateArray2[i])
+                    {
+                        if(i==arraySize-1)
                         {
-                                greater = true;
+                            greater = true;
+                            break;
                         }
-                        else if(dateArray1[1] == dateArray2[1])
-                        {
-                                if(dateArray1[0] >= dateArray2[0])
-                                {
-                                        greater = true;
-                                }
-                        }
+                    }
+                    else
+                    {
+                        greater = false;
+                        break;
+                    }
                 }
                 
                 if(greater)
@@ -112,9 +119,9 @@ $( document ).ready(function(){
         //Function to chronologically compare two posters.
         function sortPostersByDate(PosterArray1, PosterArray2)
         {
-                
-                dateArray1 = [PosterArray1[5], PosterArray1[4], PosterArray1[3]];
-                dateArray2 = [PosterArray2[5], PosterArray2[4], PosterArray2[3]];
+                //Year, Month, Day, Hour, Minute
+                dateArray1 = [parseInt(PosterArray1[3]), parseInt(PosterArray1[4]), parseInt(PosterArray1[5]), parseInt(PosterArray1[7].split(":")[0]), parseInt(PosterArray1[7].split(":")[1])];
+                dateArray2 = [parseInt(PosterArray2[3]), parseInt(PosterArray2[4]), parseInt(PosterArray2[5]), parseInt(PosterArray2[7].split(":")[0]), parseInt(PosterArray2[7].split(":")[1])];
                 
                 return(sortByDate(dateArray1, dateArray2));
         }
@@ -189,7 +196,7 @@ $( document ).ready(function(){
                         var EventDateYear = splitdate[2];
                         
                         //If the poster date is not already passed and is an approved poster, then queue it for display.
-                        if(sortByDate([parseInt(EventDateDay), parseInt(EventDateMonth), parseInt(EventDateYear)], [TodayDay, TodayMonth, TodayYear])==1 && Approved.toLowerCase() == "y")
+                        if(sortByDate([parseInt(EventDateYear), parseInt(EventDateMonth), parseInt(EventDateDay), 23, 59], [TodayYear, TodayMonth, TodayDay, 0, 0])==1 && Approved.toLowerCase() == "y")
                         {
                                 ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists]);
                         }
