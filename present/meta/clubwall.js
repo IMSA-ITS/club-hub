@@ -228,7 +228,7 @@ $( document ).ready(function(){
                             var EventDateYear = splitdate[2];
                             
                             //If the poster date is not already passed, the poster is an approved poster, the poster is not opted-out of poster display, and the poster is in this display group, then queue it for display.
-                            if(sortByDate([ortByDate([parseInt(EventDateYear), parseInt(EventDateMonth), parseInt(EventDateDay), 23, 59], [TodayYear, TodayMonth, TodayDay, 0, 0])==1 && Approved.toLowerCase() == "y" && DisplayOpts.search("noposter")==-1 && (DisplayGroup.search(ThisGroup)!=-1 || DisplayGroup == "" || ThisGroup == ""))
+                            if(sortByDate([parseInt(EventDateYear), parseInt(EventDateMonth), parseInt(EventDateDay), 23, 59], [TodayYear, TodayMonth, TodayDay, 0, 0])==1 && Approved.toLowerCase() == "y" && DisplayOpts.search("noposter")==-1 && (DisplayGroup.search(ThisGroup)!=-1 || DisplayGroup == "" || ThisGroup == ""))
                             {
                                     ToBePosted.push([HostName, EventName, EventDesc, EventDateYear, EventDateMonth, EventDateDay, PosterID, EventTime, EventGenLoc, EventLoc, EventDate, PosterExists, DisplayOpts]);
                             }
