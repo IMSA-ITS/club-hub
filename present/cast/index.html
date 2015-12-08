@@ -50,13 +50,13 @@
 			    sessionListener,
 			    receiverListener);
 			  chrome.cast.initialize(apiConfig, onInitSuccess, onError);
-                          start();
 			};
 			/**
 			 * initialization success callback
 			 */
 			function onInitSuccess() {
 			  console.log("onInitSuccess");
+                          start();
 			}
 			/**
 			 * initialization error callback

@@ -49,12 +49,6 @@
 	        window.close();
 	      }
         };
-        
-        // handler for 'systemvolumechanged' event
-        castReceiverManager.onSystemVolumeChanged = function(event) {
-          console.log('Received System Volume Changed event: ' + event.data['level'] + ' ' +
-              event.data['muted']);
-        };
      }
     </script>
   </body>

@@ -32,6 +32,8 @@ $( document ).ready(function(){
         var imp;
         var counter = 1;
         var colors = ["rgb(255,85,85)", "rgb(85,153,255)", "rgb(15,207,77)"];
+
+        var loops = 3;
         
         var ThisRatio = $(window).width()/$(window).height();
         
@@ -319,7 +321,7 @@ $( document ).ready(function(){
                     //Use these events to set a timer for the slide.
                     //When the step count exceeds a certain limit (indcating the age of the slideshow), refresh.
                     document.addEventListener('impress:stepenter', function(e){
-                        if(counter > ToBePosted.length+2)
+                        if(counter > loops*$(".step").length)
                         {
                             $.ajax({
                                     url: window.location.protocol + "//" + window.location.host + "/clubhub/present/?rand=" + Math.floor((1 + Math.random()) * 0x10000),
@@ -327,7 +329,8 @@ $( document ).ready(function(){
                                     timeout: 1000,
                                     success: function (response) {
                                             console.log("Updating...");
-                                            document.location.href="/clubhub/present/?group="+ThisGroup;
+                                            //document.location.href="/clubhub/present/?group="+ThisGroup;
+                                            location.reload();
                                     },
                                     error: function(error) {
                                         console.log("Offline.")
