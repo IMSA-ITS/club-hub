@@ -99,7 +99,8 @@
                                 {
                                         chrome.cast.requestSession(function(e) {
 				        console.log("Session started successfully.");
-                                }, onError);
+                                        }, onError);
+                                }
                         }
 			
                         function stopApp() {
@@ -121,9 +122,5 @@
 			<textarea rows="20" cols="70" id="debugmessage">
 			</textarea>
 		</div>
-
-		<script type="text/javascript">
-			document.getElementById("input").focus();
-		</script>
 	</body>
 </html>
