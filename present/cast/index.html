@@ -14,6 +14,8 @@
 	</body>
 
 	<script src="https://code.jquery.com/jquery-2.0.3.min.js"></script>
+	<!--<script type="text/javascript" src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js"></script>-->
+
 	<script>
 		var cast_api,
 			cv_activity,
@@ -21,6 +23,7 @@
 			$killSwitch = $('.kill');
 
 		window.addEventListener('message', function(event) {
+			console.log("heY");
 			if (event.source === window && event.data &&
 					event.data.source === 'CastApi' &&
 					event.data.event === 'Hello') {
@@ -29,6 +32,7 @@
 		});
 
 		initializeApi = function() {
+			console.log("WOW");
 			if (!cast_api) {
 				cast_api = new cast.Api();
 				cast_api.addReceiverListener('D1F8A2B7', onReceiverList);
