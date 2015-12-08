@@ -95,7 +95,7 @@ $( document ).ready(function(){
                     var greater = false;
                     var arraySize = 5;
                     
-                    console.log(dateArray1, dateArray2);
+                    //console.log(dateArray1, dateArray2);
                     
                     for(i = 0; i < arraySize; i++)
                     {
@@ -305,7 +305,7 @@ $( document ).ready(function(){
                             $(".fullposter").load(function(){
                                    
                                     var poster = $(this);
-                                    console.log(poster.width()/poster.height()+" "+ThisRatio);
+                                    //console.log(poster.width()/poster.height()+" "+ThisRatio);
                                     if(poster.width()/poster.height() > ThisRatio)
                                     {
                                         $(poster).addClass("fullposter-wide");
