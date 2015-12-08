@@ -139,8 +139,9 @@
                                 if(session==null)
                                 {
                                         chrome.cast.requestSession(function(e) {
-				        console.log("Session started successfully.");
-                                        }, onError);
+                                        session = e;
+                                        session.sendMessage(namespace, message, onSuccess.bind(this, "Message sent: " + message), onError);
+                                      }, onError);
                                 }
                         }
 			
