@@ -56,7 +56,7 @@
 			 */
 			function onInitSuccess() {
 			  console.log("onInitSuccess");
-                          //start();
+                          start();
 			}
 			/**
 			 * initialization error callback
@@ -85,6 +85,7 @@
                           session = e;
                           session.addUpdateListener(sessionUpdateListener);  
                           session.addMessageListener(namespace, receiverMessage);
+                          $("#status").html("Connected to a display and casting.");
                         }
                         /**
                          * listener for session updates
@@ -155,6 +156,7 @@
 			<tr>
 				<td>
                                         <h1>Welcome to the Club Hub SUDCast Command Page</h1>
+                                        <p id="status">Select a display for Casting.</p>
 				</td>
 			</tr>
 		</table>	
