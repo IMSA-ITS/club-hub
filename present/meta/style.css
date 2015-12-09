@@ -130,7 +130,6 @@ h1, h2
 {
     height: 100%;
     display: inline-block;
-    float: left;
     vertical-align: middle;
 }
 

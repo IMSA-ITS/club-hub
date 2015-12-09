@@ -278,7 +278,7 @@ $( document ).ready(function(){
                             //Generate the slideshow by appending to the main document.
                             if(ToBePosted[index][12].search("fullposter")!=-1)
                             {
-                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><span class=\"helper\"></span>"+postercode+"</div></div>");
+                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\">"+postercode+"<span class=\"helper\"></span></div></div>");
                                 
                             }
                             else
