@@ -321,7 +321,7 @@ $( document ).ready(function(){
                     //Use these events to set a timer for the slide.
                     //When the step count exceeds a certain limit (indcating the age of the slideshow), refresh.
                     document.addEventListener('impress:stepenter', function(e){
-                        if(counter > loops*$(".step").length)
+                        /*if(counter > loops*$(".step").length)
                         {
                             $.ajax({
                                     url: window.location.protocol + "//" + window.location.host + "/clubhub/present/?rand=" + Math.floor((1 + Math.random()) * 0x10000),
@@ -340,7 +340,7 @@ $( document ).ready(function(){
                                         $("#timer").css("backgroundColor", "rgb(255,200,200)");
                                     }
                             });
-                        }
+                        }*/
                         if (typeof timing !== 'undefined') clearInterval(timing);
                         var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 10000);
                         timing = setInterval(imp.next, duration);
