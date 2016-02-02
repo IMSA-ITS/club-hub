@@ -26,11 +26,35 @@ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga
         };
 })();
 
+//ANTI-FREEZE PROTOCOL
+setInterval(function(){
+    if(previous == counter)
+    {
+        console.log("FREEZE DETECTED! Reloading.");
+        if (typeof triggerReload === "function") 
+        { 
+            console.log("Using graceful reload.");
+            triggerReload();
+        }
+        else
+        {
+            console.log("CRITICAL ERROR: BAD LOAD. FORCING RELOAD.")
+            location.reload();
+        }        
+    }
+    else
+    {
+        previous = counter;
+    }
+}, 60000);
+
+
+var counter = 1, previous = 0;
+
 //The main code
 $( document ).ready(function(){     
     
         var imp;
-        var counter = 1;
         var colors = ["rgb(255,85,85)", "rgb(85,153,255)", "rgb(15,207,77)"];
 
         var loops = 3;
@@ -173,6 +197,27 @@ $( document ).ready(function(){
                 var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                     results = regex.exec(location.search);
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            
+            function triggerReload()
+            {
+                $.ajax({
+                        url: window.location.protocol + "//" + window.location.host + "/clubhub/present/?rand=" + Math.floor((1 + Math.random()) * 0x10000),
+                        type: "HEAD",
+                        timeout: 1000,
+                        success: function (response) {
+                                console.log("Updating...");
+                                //document.location.href="/clubhub/present/?group="+ThisGroup;
+                                location.reload();
+                        },
+                        error: function(error) {
+                            console.log("Offline.")
+
+                            //If the SUD can't connect to the internet, it will simply continue to show
+                            //the slides it has. The progress bar will go red to indicate that it is in offline mode.
+                            $("#timer").css("backgroundColor", "rgb(255,200,200)");
+                        }
+                });
             }
             
             //IMPORTANT!! ###############################################################
@@ -320,28 +365,15 @@ $( document ).ready(function(){
                     //Listen to when the slides change and to track the slideshow progress.
                     //Use these events to set a timer for the slide.
                     //When the step count exceeds a certain limit (indcating the age of the slideshow), refresh.
-                    document.addEventListener('impress:stepenter', function(e){
+                    document.addEventListener('impress:stepenter', function(e){                            
+                    
                         if(counter > loops*$(".step").length)
                         {
-                            $.ajax({
-                                    url: window.location.protocol + "//" + window.location.host + "/clubhub/present/?rand=" + Math.floor((1 + Math.random()) * 0x10000),
-                                    type: "HEAD",
-                                    timeout: 1000,
-                                    success: function (response) {
-                                            console.log("Updating...");
-                                            //document.location.href="/clubhub/present/?group="+ThisGroup;
-                                            location.reload();
-                                    },
-                                    error: function(error) {
-                                        console.log("Offline.")
-
-                                        //If the SUD can't connect to the internet, it will simply continue to show
-                                        //the slides it has. The progress bar will go red to indicate that it is in offline mode.
-                                        $("#timer").css("backgroundColor", "rgb(255,200,200)");
-                                    }
-                            });
+                            triggerReload();
                         }
                         if (typeof timing !== 'undefined') clearInterval(timing);
+                        
+                        //Set default slide duration here. SHOULD NOT EXCEED 60 seconds, unless you edit the Anti-Freeze Protocol.
                         var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 10000);
                         timing = setInterval(imp.next, duration);
                         $("#timerstat").css("backgroundColor", colors[counter%3]);
