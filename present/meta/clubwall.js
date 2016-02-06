@@ -360,6 +360,13 @@ $( document ).ready(function(){
                                         $(poster).addClass("fullposter-tall");
                                     }
                             });
+                            
+                            //Update countdown elements ~ For Mr. Gentzler :)
+                            $(".countdown").each(function(){
+                                    var tdate = new Date(d.getFullYear(), d.getMonth(), d.getDay());
+                                    var cdate = new Date($(this).attr("data-date").substring(0,4),parseInt($(this).attr("data-date").substring(4,6))-1,$(this).attr("data-date").substring(6,8));
+                                    $(this).html(Math.floor((cdate.getTime()-tdate.getTime())/86400000));
+                            });
                     });
                     
                     //Listen to when the slides change and to track the slideshow progress.
