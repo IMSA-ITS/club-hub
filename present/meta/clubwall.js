@@ -49,22 +49,23 @@ setInterval(function(){
 }, 60000);
 
 
-var counter = 1, previous = 0;
+var counter = 0, previous = -1;
 
 //The main code
 $( document ).ready(function(){     
-    
-        var imp;
         var colors = ["rgb(255,85,85)", "rgb(85,153,255)", "rgb(15,207,77)"];
 
         var loops = 3;
         
         var ThisRatio = $(window).width()/$(window).height();
         
-        //Load presentation js before running everything.
-        $.getScript("/clubhub/present/meta/impress.js", function(){
-            
-            imp = impress();
+        var slideInterval = "";
+        
+        function scrollToAnchor(aid){
+            var aTag = $("a[name='"+ aid +"']");
+            if(aTag.length) $('html,body').animate({scrollTop: aTag.offset().top},'slow');
+        }
+
         
             //A dictionary to convert internal codes to human-readable words.
             function humanReadable(word)
@@ -106,10 +107,6 @@ $( document ).ready(function(){
                 }
                 else return word;
             }
-            
-            //Hide filter labels.
-            $("#clear-filters").hide();
-            $("#filterlist").hide();
             
             //Function to chronologically compare two dates.
             function sortByDate(dateArray1, dateArray2)
@@ -197,7 +194,7 @@ $( document ).ready(function(){
                 var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                     results = regex.exec(location.search);
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-            }
+            }               
             
             function triggerReload()
             {
@@ -323,27 +320,24 @@ $( document ).ready(function(){
                             //Generate the slideshow by appending to the main document.
                             if(ToBePosted[index][12].search("fullposter")!=-1)
                             {
-                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\">"+postercode+"<span class=\"helper\"></span></div></div>");
+                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><a name=\"step-"+(index+1)+"\"></a><div class=\"clubcard\">"+postercode+"<span class=\"helper\"></span></div></div>");
                                 
                             }
                             else
                             {
                                 //$("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+urlify(ToBePosted[index][2])+"</p>"+postercode+"</div></div>");
-                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+ToBePosted[index][2]+"</p>"+postercode+"</div></div>");
+                                $("#impress").append("<div class=\"step\" data-x=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-y=\""+Math.round(Math.cos(index+1)*500*(index+1))+"\" data-z=\""+((index+1)*1500)+"\"><a name=\"step-"+(index+1)+"\"></a><div class=\"clubcard\"><h1 class=\"title\">"+ToBePosted[index][1]+"</h1><h3 class=\"host\">"+ToBePosted[index][0]+"</h3><h3 class=\"logis\">"+namedate.getDayName()+", "+ToBePosted[index][10]+"<br />"+tConvert(ToBePosted[index][7])+"<br />"+ToBePosted[index][9]+"</h3><p class=\"detail\" "+detailexpand+">"+ToBePosted[index][2]+"</p>"+postercode+"</div></div>");
                             }
                     }).promise().done(function(){
 
                             //Append a slide that pulls a funny gif from my gif folder.
                             //Comment this out if you don't want it.
-                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><div class=\"clubcard\"><div class=\"centered\"><img id=\"gifofthemoment\" src=\"https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*20)+".gif\"></div></div></div>");
-
-                            //Initialize the slideshow
-                            imp.init();
+                            $("#impress").append("<div class=\"step\" data-x=\"0\" data-y=\"0\" data-z=\""+(ToBePosted.length+1)*1500+"\" data-transition-duration=\"5000\"><a name=\"step-"+(ToBePosted.length+1)+"\"><div class=\"clubcard\"></a><div class=\"centered\"><img id=\"gifofthemoment\" src=\"https://googledrive.com/host/0B_vROCev3947WXV6TnZBMFNPbWM/"+Math.ceil(Math.random()*20)+".gif\"></div></div></div>");
 
                             //Set everything to the proper dimensions.
                             $(".poster").css("max-height", $("html").height()*.75);
-                            $(".clubcard").css("width", $("html").width());
-                            $(".clubcard").css("height", $("html").height());
+                            $(".clubcard").css({width: $(window).width()});
+                            $(".clubcard").css({height: $(window).height()});
                             $("#gifofthemoment").css("height", $("html").height());
                             
                             //Correct the ratios of the fullscreen posters.
@@ -367,30 +361,42 @@ $( document ).ready(function(){
                                     var cdate = new Date($(this).attr("data-date").substring(0,4),parseInt($(this).attr("data-date").substring(4,6))-1,$(this).attr("data-date").substring(6,8));
                                     $(this).html(Math.floor((cdate.getTime()-tdate.getTime())/86400000));
                             });
-                    });
-                    
-                    //Listen to when the slides change and to track the slideshow progress.
-                    //Use these events to set a timer for the slide.
-                    //When the step count exceeds a certain limit (indcating the age of the slideshow), refresh.
-                    document.addEventListener('impress:stepenter', function(e){                            
-                    
-                        if(counter > loops*$(".step").length)
-                        {
-                            triggerReload();
-                        }
-                        if (typeof timing !== 'undefined') clearInterval(timing);
-                        
-                        //Set default slide duration here. SHOULD NOT EXCEED 60 seconds, unless you edit the Anti-Freeze Protocol.
-                        var duration = (e.target.getAttribute('data-transition-duration') ? e.target.getAttribute('data-transition-duration') : 10000);
-                        timing = setInterval(imp.next, duration);
-                        $("#timerstat").css("backgroundColor", colors[counter%3]);
-                        $("#timerstat").animate({width: "100%"}, duration, "linear", function(){
-                            $(this).css("float", "right").animate({width: "0%"}, 200, function(){
-                                $(this).css("float", "none");
-                            });
-                        });
-                        counter++;
+                            
+                            //Listen to when the slides change and to track the slideshow progress.
+                            //Use these events to set a timer for the slide.
+                            //When the step count exceeds a certain limit (indcating the age of the slideshow), refresh.
+                            
+                            
+                            //Start slideshow!
+                            advanceSlide();
+                            
+                            function advanceSlide()
+                            {
+                                var duration = $(".step").get(counter%$(".step").length).getAttribute("data-transition-duration");
+                                duration = duration ? duration : 10000;
+                                scrollToAnchor("step-"+(counter%$(".step").length));
+                                console.log((counter%$(".step").length)+": "+duration)
+                                
+                                console.log("hey!");                          
+                            
+                                if(counter > loops*$(".step").length)
+                                {
+                                    triggerReload();
+                                }
+                                
+                                if (typeof timing !== 'undefined') clearInterval(timing);
+                                
+                                //Set default slide duration here. SHOULD NOT EXCEED 60 seconds, unless you edit the Anti-Freeze Protocol.
+                                timing = setInterval(advanceSlide, duration);
+                                console.log(">>> "+duration);
+                                $("#timerstat").css("backgroundColor", colors[counter%3]).animate({width: "100%"}, duration, "linear", function(){
+                                    $(this).css("float", "right").animate({width: "0%"}, 200, function(){
+                                        $(this).css("float", "none");
+                                    });
+                                });
+                                counter++;
+                            }
+                            
                     });
             });
-        });
 });
