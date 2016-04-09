@@ -3,8 +3,7 @@
 
 @import url(https://fonts.googleapis.com/css?family=Roboto+Slab);
 @import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300:400);
 /* Set global styles */
 
 body,
@@ -54,12 +53,14 @@ h2 {
     height: 100%;
     background-color: rgb(250, 250, 250);
     overflow: hidden;
+    /*display: none;*/	/*do not render right away*/
 }
 .clubcard .title {
     font-family: "Roboto Condensed", sans-serif;
     position: absolute;
     top: 0;
     left: 5%;
+    margin-top: 2%;
     font-size: 4em;
     width: 50%;
 }
@@ -67,6 +68,7 @@ h2 {
     position: absolute;
     top: 0;
     right: 5%;
+    margin-top: 2%;
     font-size: 4em;
     font-family: "Roboto", sans;
     font-weight: bold;
@@ -78,7 +80,7 @@ h2 {
 .clubcard .logis {
     position: absolute;
     font-family: "Roboto", sans;
-    top: 22.5%;
+    top: 20%;
     left: 5%;
     font-size: 2em;
     width: 30%;
@@ -95,18 +97,19 @@ h2 {
     position: absolute;
     top: 20%;
     right: 5%;
-    max-width: 45%;
+    width: 45%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
 }
-.clubcard .fullposter.fullposter-wide {
-    max-width: 100%;
-    display: inline-block;
-    vertical-align: middle;
+
+.clubcard.fullposter {
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
-.clubcard .fullposter.fullposter-tall {
-    display: block;
-    max-height: 100%;
-    margin: 0 auto;
-}
+
 .clubcard .helper {
     height: 100%;
     display: inline-block;

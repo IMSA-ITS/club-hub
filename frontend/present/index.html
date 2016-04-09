@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<!-- Club Hub - An Automated Event Display Framework -->
+<html>
+
+<head>
+        <!-- Include style files, jQuery, the ClubWall javascript code, and other important libraries -->
+        <title>SUD | Club Hub</title>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="/present/meta/style.css" />
+        <script src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="/present/meta/clubwall.js"></script>
+</head>
+
+<body>
+        <!-- A little progress bar that is fixed to the screen -->
+        <div id="timer">
+                <div id="timerstat"></div>
+        </div>
+
+        <!-- The slideshow itself. Items are appended by clubwall.js -->
+        <div id="slideshow">
+                <!-- The main card shown at the beginning of each presentation cycle. Modify as you like it. -->
+                <div class="step" data-transition-duration="2000">
+                        <a name="step-0"></a>
+                        <div class="clubcard" id="card-0">
+                                <div id="clubhubinfo">
+                                        <img id="club-logo" src="/media/Club_Hub_Branding.png" alt="Club Hub" />
+                                        <h3>Synchronized Universal Display</h3>
+                                        <p>version 2.5.0</p>
+                                        <p><b>Visit</b> the website at clubhub.studco.org</p>
+                                        <p><b>Register</b> an event at clubhub.studco.org/submit</p>
+                                        <!-- Provide some kind of attribution here please. :)
+                                        Example: Copyright &copy 2015 IMSA Student Council. Original framework by George Moe. -->
+                                        <p>Copyright &copy 2016 IMSA Student Council.</p>
+                                        <p>Created by George Moe.</p>
+                                </div>
+                        </div>
+                </div>
+        </div>
+</body>
+
+</html>

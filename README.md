@@ -1,9 +1,9 @@
 Club Hub
 ================
 
-See what's next in one glance: Club Hub is a framework that automatically displays event and poster information cleanly and intuitively. Designed for schools and other organizations with mass comminications needs.
+See what's next in one glance: Club Hub is a framework that automatically displays event and poster information cleanly and intuitively. It is designed for schools and other organizations with mass comminications needs.
 Club Hub also comes with the Synchronized Universal Display (Club Hub SUD), a automated slideshow solution for use on digital displays across campus.
-Finally, it integrates into the Club Hub RemindMe! event subscription service, which allows users to get reminders for events.
+It also integrates into the Club Hub RemindMe! event subscription service, which allows users to get reminders for events.
 
 Download
 ----------------
@@ -49,7 +49,7 @@ Protip: You might want to move `backend/` out of the served directory, since it 
 Attribution
 ----------------
 
-The original framework was made by George Moe. Attribution would be very much appreciated.
+The original idea and framework was formulated, designed, tested, and coded by [George Moe](https://george.moe "George's Website") over the span of nearly two years. Attribution would be very much appreciated.
 
 This work is distributed under a GPLv3 license. See LICENSE for more details.
 

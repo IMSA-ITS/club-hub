@@ -1,3 +1,21 @@
+CLUB HUB 2.5.0 CHANGELOG
+==============================
+2016-04-08
+
+This is the first version that is ready for use at IMSA.
+
+**Changes to the Club Hub Framework:**
+
++Fixed some broken links to george.moe after it was reorganized.
++Cleaned up code.
+
+**Changes to the Club Hub Website:**
+
++Fixed stability and memory issues with SUD Cast on Chromecasts.
++Optimized Club Hub Present and the Synchronized Universal Display to use 
+ an in-house lightweight jQuery slideshow solution.
++Cleaned up code.
+
 CLUB HUB 2.2.0 CHANGELOG
 ==============================
 
