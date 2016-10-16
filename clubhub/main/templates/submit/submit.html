@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+{% load bootstrap3 %}
+{% load tz %}
+
+{% block content %}
+    {% get_current_timezone as TIME_ZONE %}
+    {% timezone TIME_ZONE %}
+
+    <!-- The usage description at the top of the page. -->
+    <div class="protip">
+        <p><b>Register your event with Club Hub.</b></p>
+        <p>Complete the form below to enter your event into the Club Hub database. After you submit, Student Life will
+            review your event for approval.</p>
+    </div>
+    <div class="content-area">
+        <form method="POST" id="submission-form" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+
+            <input type="submit" class="css-button-actualbutton" id="submit-event"
+                   style="display: block; margin: 0 auto;" />
+            <script>
+                $(document).ready(function () {
+                    $("#id_event_datetime").datetimepicker({
+                        sideBySide: true,
+                        format: "MM/DD/YYYY HH:mmZZ"
+                    });
+                });
+            </script>
+        </form>
+    </div>
+
+    {% endtimezone %}
+
+{% endblock %}

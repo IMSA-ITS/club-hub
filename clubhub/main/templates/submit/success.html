@@ -1,0 +1,11 @@
+{% extends "main/base.html" %}
+
+{% block content %}
+    <div class="protip protip-green">
+        <p>Your event has successfully been submitted. Please check your email for a confirmation receipt.</p>
+    </div>
+    <div class="css-button">
+	    <div class="css-button-link" data-link="{% url "index" %}">Returning to Club Hub...</div>
+    </div>
+    <meta http-equiv="refresh" content="3;{% url "index" %}" />
+{% endblock %}

@@ -1,0 +1,79 @@
+{% load staticfiles %}
+<!DOCTYPE HTML>
+<!-- Club Hub - An Automated Event Display Framework -->
+<html>
+<head>
+    <!-- Include style files, jQuery, the ClubWall javascript code, and other important libraries -->
+    <title>{% block title %}Club Hub{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static "favicon.ico" %}"/>
+
+    <link rel="stylesheet" href="{% static "meta/fancybox/source/jquery.fancybox.css" %}" type="text/css" media="screen"/>
+    <link rel="stylesheet" href="{% static "meta/bower_components/bootstrap/dist/css/bootstrap.min.css" %}"/>
+    <link rel="stylesheet" href="{% static "meta/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static "meta/style.css" %}"/>
+
+    {% block css-headers %}
+    {% endblock %}
+
+    <script type="text/javascript" src="{% static "meta/bower_components/jquery/dist/jquery.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "meta/fancybox/source/jquery.fancybox.pack.js" %}"></script>
+    <script src="{% static "meta/jquery.tablesorter.min.js" %}"></script>
+    <script src="{% static "meta/readmore.min.js" %}"></script>
+    <script src="{% static "meta/bower_components/moment/min/moment-with-locales.min.js" %}"></script>
+    <script src="{% static "meta/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+    <script src="{% static "meta/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" %}"></script>
+    <script src="{% static "meta/clubwall.js" %}"></script>
+
+
+    {% block js-headers %}
+    {% endblock %}
+
+    <!-- Google Analytics snippet. Put your own tracking code here. -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                    m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-55205533-10', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+<div id="wrap">
+    <div id="main">
+        <div class="branding-box">
+            <!-- The logo in the header. Replace the href and src here if you want to customize them. -->
+            <a href="{% url "index" %}"><img id="club-logo" src="{% static "media/Club_Hub_Branding.png" %}"
+                                             alt="Club Hub"/></a>
+        </div>
+        <div id="main-body">
+            <div class="body-box">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Copyright line. Please attribute the original source to George Moe and https://george.moe in some way. -->
+<div id="footer">
+    <!-- Button that links to the Club Hub about page. -->
+    <div class="css-button" id="clubhub-info">
+        <div class="css-button-link" data-link="/about">Club Hub version 3.0.1</div>
+    </div>
+    <p>Copyright &copy 2016 <a href="https://george.moe/">George Moe</a></p>
+    <a href="https://george.moe"><img id="gm-logo" class="logo" src="{% static "media/georgemoe_logo_dark.png" %}" width="200px" style="margin-bottom: 1%"
+                         alt="Created by George Moe"/></a>
+    <a href="https://tsociety.org"><img src="{% static "media/hostedby_tsociety_dark.png" %}" width="180px" style="margin: 0 0 1% 5%" /></a>
+</div>
+</body>
+</html>

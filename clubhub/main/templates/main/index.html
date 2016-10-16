@@ -1,0 +1,97 @@
+{% extends "main/base.html" %}
+{% load humanize %}
+{% load sanitize %}
+{% load staticfiles %}
+{% load tz %}
+
+{% localtime on %}
+
+{% block title %}Home | Club Hub{% endblock %}
+
+{% block content %}
+    <div class="protip">
+        <p><b>IMSA's events are sorted sequentially below.</b></p>
+        <p>Click on a poster to enlarge it. Click on the header to sort by those categories. Click on an event name to
+            set up an email reminder.</p>
+        <p>Events are filterable, too: click on a date, host, time, or location to filter by those properties.</p>
+    </div>
+
+    <!-- Button and lists used for filtering events. These show up when a filter is activated. -->
+    <div class="css-button" id="clear-filters">
+        <div>Clear All Filters</div>
+    </div>
+    <div id="filterlist"></div>
+
+    <!-- The table of events itself. Items are appended here by clubwall.js. -->
+    <div>
+        <table id="event-table">
+            <thead>
+            <tr>
+                <th class="sortable table-info">Date</th>
+                <th class="table-poster">Poster</th>
+                <th class="sortable table-name">Event</th>
+                <th class="sortable table-name">Host</th>
+                <th class="table-long">Description</th>
+                <th class="sortable table-info">Time</th>
+                <th class="sortable table-info">Location</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for poster in posters %}
+                <tr data-date="{{ poster.event_datetime|date:"SHORT_DATE_FORMAT" }}"
+                    data-time="{{ poster.event_datetime|time:"g:i A" }}" data-host="{{ poster.event_host }}"
+                    data-genloc="{{ poster.event_location }}">
+                    <td class="date clickable" data-date="{{ poster.event_datetime|date:"U" }}">
+                        {{ poster.event_datetime|date:"l" }}<br/>
+                        {{ poster.event_datetime|date:"M j, Y" }}
+                    </td>
+                    <td>
+                        {% if poster.poster_file %}
+                            <a class="fancybox" rel="posters" href="{{ poster.poster_file.url }}">
+                                <img class="poster-img" src="{{ poster.poster_file.url }}">
+                            </a>
+                        {% endif %}
+                    </td>
+                    <td class="remindme clickable">{{ poster.event_name }}</td>
+                    <td class="host clickable">{{ poster.event_host }}</td>
+                    <td>
+                        <div class="description">{{ poster.event_body|sanitize }}</div>
+                    </td>
+                    <td class="time clickable" data-time="{{ poster.event_datetime|date:"H:i" }}">
+                            {{ poster.event_datetime|date:"g:i A" }}
+                    </td>
+                    <td class="clickable location">
+                        {{ poster.event_location|humanize }}
+                        {% if poster.event_specific_location %}
+                            <br />
+                            {{ poster.event_specific_location }}
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Links underneath the table that go to surveys. Change the URLs if you'd like. -->
+    <div class="protip protip-green">
+        <p>How are we doing? <a href="mailto:george@george.moe">Report a Problem</a> <a
+                href="https://docs.google.com/forms/d/1yUp5F4jKBYsjFrFXqSQl3fHo9M8RALEqRhogvSnZba4/viewform?usp=send_form">Feedback
+            Form (for Clubs)</a> <a
+                href="https://docs.google.com/forms/d/1L0bRg58otPibw8Pv8dufQ0mGN9dJmEKtlt7Kyg38rVc/viewform?usp=send_form">Feedback
+            Form (for Students)</a></p>
+    </div>
+
+    <!-- Disclaimer for use at the Illinois Mathematics and Science Academy. -->
+    <div class="protip protip-clear">
+        <p><i>Club Hub is an <b>official</b> service. The events in this table <b>have been approved</b> by Student
+            Life.</i></p>
+    </div>
+
+    <!-- Button that links to the submission form. Change it to link to your own CHER installation. -->
+    <div class="css-button">
+        <div class="css-button-link" data-link="{% url "submit" %}">Register an Event</div>
+    </div>
+{% endblock %}
+
+{% endlocaltime %}

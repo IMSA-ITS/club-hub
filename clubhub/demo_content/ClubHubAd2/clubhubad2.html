@@ -1,0 +1,20 @@
+<!--This is a long-running advertisement demonstrating Club Hub's dynamic features.-->
+<style>
+	#clubhubad { 
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 20;
+		width: 100vw;
+		height: 100vh;
+	}
+</style>
+<script>
+	function stepfunction_clubhubad_start(){
+		$("body").append("<iframe id=\"clubhubad\" type=\"text/html\" src=\"https://www.youtube.com/embed/9oW0-gXjjus?autoplay=1&showinfo=0&controls=0&enablejsapi=1\" frameborder=\"0\" allowfullscreen></iframe>");
+	}
+	
+	function stepfunction_clubhubad_teardown(){
+		$("#clubhubad").remove();
+	}
+</script>

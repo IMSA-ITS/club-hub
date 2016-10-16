@@ -1,0 +1,7 @@
+psycopg2
+Pillow
+Django
+django-bootstrap3
+pytz
+django-easy-timezones
+sendgrid

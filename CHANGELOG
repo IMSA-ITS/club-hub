@@ -1,3 +1,20 @@
+CLUB HUB 3.0.0 CHANGELOG
+==============================
+2016-08-21
+
+This version of Club Hub features a migration to Django,
+along with major UX updates.
+
+**Changes to the Club Hub Framework:**
+
++Migrated to Django. Moved from a Google App Script storage
+ and submisson system to Django's database system.
+
+**Changes to the Club Hub Website:**
+
++Improved UX around the site
++Added an adminstration panel for ease of management
+
 CLUB HUB 2.5.0 CHANGELOG
 ==============================
 2016-04-08

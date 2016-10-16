@@ -1,0 +1,84 @@
+{% extends "present/index.html" %}
+
+{% block extrabody %}
+    <style>
+        #status {
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin: 0.5%;
+            z-index: 100;
+        }
+
+        #heart {
+            color: red;
+        }
+
+        #info {
+            font-size: 0.8em;
+            vertical-align: middle;
+        }
+    </style>
+    <script type="text/javascript" src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            console.log("Club Hub SUD for Digital Displays version 2.5.0.");
+
+            cast.receiver.logger.setLevelValue(cast.receiver.LoggerLevel.NONE);
+            window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
+            console.log('Starting Receiver Manager');
+
+            // handler for the 'ready' event
+            castReceiverManager.onReady = function (event) {
+                console.log('Received Ready event: ' + JSON.stringify(event.data));
+                window.castReceiverManager.setApplicationState("Club Hub is Online.");
+                window.castReceiverManager.setInactivityTimeout(31557600);
+            };
+
+            // handler for 'senderconnected' event
+            castReceiverManager.onSenderConnected = function (event) {
+                console.log('Received Sender Connected event: ' + event.data);
+                console.log(window.castReceiverManager.getSender(event.data).userAgent);
+            };
+
+            // handler for 'senderdisconnected' event
+            castReceiverManager.onSenderDisconnected = function (event) {
+                console.log('Received Sender Disconnected event: ' + event.data);
+            };
+
+            // create a CastMessageBus to handle messages for a custom namespace
+            window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:in.undef.clubhub');
+
+            // handler for the CastMessageBus message event
+            window.messageBus.onMessage = function (event) {
+                console.log('Message [' + event.senderId + ']: ' + event.data);
+
+                // sender message listener will be invoked
+                if (event.data.indexOf("<3") != -1) {
+                    console.log("Received heartbeat!");
+                    beatHeart();
+                    window.messageBus.send(event.senderId, "hi");
+                }
+            }
+
+            // initialize the CastReceiverManager with an application status message
+            window.castReceiverManager.start({
+                statusText: "Club Hub is Online."
+            });
+            console.log('Receiver Manager started');
+
+            function beatHeart() {
+                $("#heart").css({color: "lime"});
+                setTimeout(unbeatHeart, 3000);
+            }
+
+            function unbeatHeart() {
+                $("#heart").css({color: "red"});
+            }
+
+        };
+    </script>
+
+    <p id="status"><span id="heart">&#9829</span></p>
+{% endblock %}

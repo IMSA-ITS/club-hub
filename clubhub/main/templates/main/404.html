@@ -1,0 +1,12 @@
+{% extends "main/index.html" %}
+
+{% block content %}
+    <div class="protip">
+        <p><b>What's all the hubbub? Oh snap, 404!</b></p>
+        <p>The page you were looking for doesn't exist.</p>
+    </div>
+    <div class="css-button">
+        <div class="css-button-link" data-link="{% url "index" %}">Returning to Club Hub...</div>
+    </div>
+    <meta http-equiv="refresh" content="3;{% url "index" %}"/>
+{% endblock %}
