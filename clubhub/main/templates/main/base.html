@@ -41,7 +41,7 @@
             // Script to open timezone prompt
             if(Cookies.get("ClubHubVisit")==undefined) {
                 $("#timezone-modal").modal("show");
-                Cookies.set("ClubHubVisit", "visited")
+                Cookies.set("ClubHubVisit", "visited", { expires: 3650 })
             }
 
             $("#modal-timezone-button").click(function(){
