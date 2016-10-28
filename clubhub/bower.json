@@ -6,7 +6,7 @@
   "description": "A Universal Event Viewer",
   "main": "manage.py",
   "license": "NOLICENSE",
-  "homepage": "clubhub.george.moe",
+  "homepage": "clubhub.live",
   "private": true,
   "ignore": [
     "**/.*",
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "moment": "^2.14.1",
-    "jquery": "^2.1.1",
+    "jquery": "3.1.1",
     "bootstrap": "^3.3.7",
     "eonasdan-bootstrap-datetimepicker": "^4.17.37"
   },
