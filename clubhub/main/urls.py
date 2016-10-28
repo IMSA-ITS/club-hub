@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^present/*$', views.present, name='present'),
     url(r'^present/receiver$', views.present_receiver, name='present.receiver'),
     url(r'^present/cast/*$', views.present_cast, name='present.cast'),
+    url(None, views.set_timezone, name='set_timezone'),
     url(r'^$', views.index, name='index'),
 ]
 

@@ -1,14 +1,15 @@
 from django.utils import timezone
 from django.utils.html import escape
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
-from django.core.mail import send_mail
+#from django.core.mail import send_mail
 from clubhub.settings import SENDGRID_API_KEY, MEDIA_URL
 from .models import Event, Approver
 from .forms import SubmitEvent
 from .templatetags.sanitize import sanitize
 import sendgrid
 from sendgrid.helpers.mail import *
+import pytz
 
 event_fields = ["event_name", "event_host", "event_body", "event_datetime", "event_location",
                 "event_specific_location", "display_fullscreen", "display_no_slideshow",
@@ -20,6 +21,10 @@ def index(request):
         "event_datetime").only(*event_fields)
     return render(request, "main/index.html", {"posters": posters})
 
+def set_timezone(request):
+    if request.method == 'POST':
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
 
 def get_present_posters():
     return Event.get_approved().filter(event_datetime__gt=timezone.now(), display_no_slideshow=False).order_by(

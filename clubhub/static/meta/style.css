@@ -298,3 +298,8 @@ h2 {
 #event-table tbody .clickable:hover {
     background-color: rgba(80, 80, 80, 0.1);
 }
+
+#timezone-container {
+    width: 30%;
+    margin: 2% auto;
+}

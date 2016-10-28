@@ -1,4 +1,9 @@
 {% load staticfiles %}
+{% load tz %}
+{% load get_timezones %}
+{% get_timezones as timezones %}
+{% get_current_timezone as TIME_ZONE %}
+
 <!DOCTYPE HTML>
 <!-- Club Hub - An Automated Event Display Framework -->
 <html>
@@ -19,10 +24,31 @@
     <script type="text/javascript" src="{% static "meta/fancybox/source/jquery.fancybox.pack.js" %}"></script>
     <script src="{% static "meta/jquery.tablesorter.min.js" %}"></script>
     <script src="{% static "meta/readmore.min.js" %}"></script>
+    <script src="{% static "meta/js.cookie.js" %}"></script>
     <script src="{% static "meta/bower_components/moment/min/moment-with-locales.min.js" %}"></script>
     <script src="{% static "meta/bower_components/bootstrap/dist/js/bootstrap.min.js" %}"></script>
     <script src="{% static "meta/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js" %}"></script>
     <script src="{% static "meta/clubwall.js" %}"></script>
+
+    <!-- Initialization scripts -->
+    <script>
+        $(document).ready(function() {
+            // Script to handle instant timezone setting
+            $("#timezone-spinner").change(function() {
+                $("#timezone-form").submit();
+            });
+
+            // Script to open timezone prompt
+            if(Cookies.get("ClubHubVisit")==undefined) {
+                $("#timezone-modal").modal("show");
+                Cookies.set("ClubHubVisit", "visited")
+            }
+
+            $("#modal-timezone-button").click(function(){
+                $("#modal-timezone-form").submit();
+            })
+        });
+    </script>
 
 
     {% block js-headers %}
@@ -66,14 +92,65 @@
 
 <!-- Copyright line. Please attribute the original source to George Moe and https://george.moe in some way. -->
 <div id="footer">
+    <div id="timezone-container">
+        <!-- Form to set the timezone -->
+        <form class="form-horizontal" id="timezone-form" action="{% url 'set_timezone' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label" for="timezone-spinner">Timezone:</label>
+                <div class="col-sm-10">
+                    <select id="timezone-spinner" class="form-control" name="timezone">
+                        {% for tz in timezones %}
+                        <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected="selected"{% endif %}>{{ tz }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </form>
+    </div>
     <!-- Button that links to the Club Hub about page. -->
     <div class="css-button" id="clubhub-info">
-        <div class="css-button-link" data-link="/about">Club Hub version 3.0.1</div>
+        <div class="css-button-link" data-link="/about">Club Hub version 3.1.0</div>
     </div>
     <p>Copyright &copy 2016 <a href="https://george.moe/">George Moe</a></p>
     <a href="https://george.moe"><img id="gm-logo" class="logo" src="{% static "media/georgemoe_logo_dark.png" %}" width="200px" style="margin-bottom: 1%"
                          alt="Created by George Moe"/></a>
     <a href="https://tsociety.org"><img src="{% static "media/hostedby_tsociety_dark.png" %}" width="180px" style="margin: 0 0 1% 5%" /></a>
 </div>
+
+<!-- Timezone prompt -->
+<div id="timezone-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Welcome to Club Hub! Please set your timezone:</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="modal-timezone-form" action="{% url 'set_timezone' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="modal-timezone-spinner">Timezone:</label>
+                        <div class="col-sm-10">
+                            <select id="modal-timezone-spinner" class="form-control" name="timezone">
+                                {% for tz in timezones %}
+                                <option value="{{ tz }}"{% if tz == "US/Central" %} selected="selected"{% endif %}>{{ tz }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <p><i>You can always change this later at the bottom of the page.</i></p>
+            </div>
+            <div class="modal-footer">
+                <button id="modal-timezone-button" type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 </body>
 </html>
