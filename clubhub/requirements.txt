@@ -1,7 +1,6 @@
-psycopg2
-Pillow
-Django
-django-bootstrap3
-pytz
-django-easy-timezones
-sendgrid
+psycopg2==2.6.2
+Pillow==3.3.1
+Django==1.10.2
+django-bootstrap3==7.0.1
+pytz==2016.7
+sendgrid==3.4.0

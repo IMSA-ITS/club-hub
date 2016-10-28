@@ -16,8 +16,4 @@ WORKDIR /opt/clubhub
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
 
-# Patch IPv6 support to django-easy-timezones
-RUN cp /opt/clubhub/easy_timezones_IPv6_patch/easy_timezones_middleware_IPv6_patched.py /usr/local/lib/python3.5/dist-packages/easy_timezones/middleware.py
-RUN pip3 install geoip2
-
 CMD ["/bin/bash", "startserver.sh"]
