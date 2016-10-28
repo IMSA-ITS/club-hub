@@ -1,3 +1,28 @@
+CLUB HUB 3.1.0 CHANGELOG
+==============================
+2016-10-28
+
+This update features improvements to time entries in the database.
+
+**Changes to the Club Hub Framework:**
+
++Moved away from django-easy-timezones (timezone over
+ GeoIP), instead implementing an option for users to
+ select their correct time zone at first visit.
+
++Events now have a Start and End time, allowing for posters
+ to be shown after start time but before the event ends.
+
+**Changes to the Club Hub Website:**
+
++Date/Time entry on the submission form is now in an intuitive
+ 12-hour time format, instead of the weird dd/MM/YY HH:mm
+ it was before.
+
++Added a select box for the user to choose their timezone.
++Added a modal dialog and a Cookie to alert users to
+ pick their timezone upon first visit.
+
 CLUB HUB 3.0.0 CHANGELOG
 ==============================
 2016-08-21
