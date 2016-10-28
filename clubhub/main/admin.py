@@ -16,10 +16,10 @@ disapprove_event.short_description = "Disapprove selected events"
 
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ["event_name", "event_host", "body_preview", "event_location", "event_datetime", "poster_preview", "approved"]
-    ordering = ["approved", "-event_datetime"]
+    list_display = ["event_name", "event_host", "body_preview", "event_location", "event_start_datetime", "poster_preview", "approved"]
+    ordering = ["approved", "-event_start_datetime"]
     actions = [disapprove_event, approve_event]
-    normaluser_fields = ("event_name", "event_host", "host_email", "event_body", "event_datetime", "event_location",
+    normaluser_fields = ("event_name", "event_host", "host_email", "event_body", "event_start_datetime", "event_end_datetime", "event_location",
                   "event_specific_location", "display_fullscreen", "display_no_slideshow",
                   "poster_file", "poster_preview", "slide_duration", "approved")
     superuser_fields = ("allow_custom_html", "custom_function", "hide_from_registry")

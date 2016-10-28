@@ -47,7 +47,8 @@ class Event(models.Model):
     event_host = models.CharField(max_length=100, verbose_name="Event Host")
     host_email = models.EmailField(verbose_name="Contact Email")
     event_body = models.TextField(verbose_name="Event Description")
-    event_datetime = models.DateTimeField(verbose_name="Event End Date/Time")
+    event_start_datetime = models.DateTimeField(verbose_name="Event Start Date/Time")
+    event_end_datetime = models.DateTimeField(verbose_name="Event End Date/Time")
     event_location = models.CharField(max_length=100, choices=LOCATION_OPTIONS, verbose_name="General Location")
     event_specific_location = models.CharField(blank=True, max_length=100, verbose_name="Specific Location")
     # Perhaps this will be useful in the future when we get more TVs.

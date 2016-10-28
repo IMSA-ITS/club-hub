@@ -21,7 +21,11 @@
                    style="display: block; margin: 0 auto;" />
             <script>
                 $(document).ready(function () {
-                    $("#id_event_datetime").datetimepicker({
+                    $("#id_event_start_datetime").datetimepicker({
+                        sideBySide: true,
+                        format : 'MM/DD/YYYY hh:mm A'
+                    });
+                    $("#id_event_end_datetime").datetimepicker({
                         sideBySide: true,
                         format : 'MM/DD/YYYY hh:mm A'
                     });

@@ -31,7 +31,7 @@
                 <img id="club-logo" src="{% static "present/media/Club_Hub_LIVE_Branding.png" %}" alt="Club Hub"/>
             </div>
             <div id="clubhubinfo">
-                <p style="margin-bottom: 0">version 3.0.1</p>
+                <p style="margin-bottom: 0">version 3.1.0</p>
                 <p style="background: yellow; font-size: 1.5em; padding: 1%; color: black">See your event here! Submit a
                     poster at <span style="font-weight: 700;">clubhub.live/submit</span>.</p>
                 <div id="credits">
@@ -69,8 +69,8 @@
                         <div class="clubcard-box eventtext">
                             <h3 class="logis">
 
-                                {{ poster.event_datetime|date:"l, M j, Y" }}<br/>
-                                {{ poster.event_datetime|time:"g:i A" }}<br/>
+                                {{ poster.event_start_datetime|date:"l, M j, Y" }}<br/>
+                                {{ poster.event_start_datetime|time:"g:i A" }}<br/>
                                 {% if poster.event_specific_location %}
                                 {{ poster.event_location|humanize }}: {{ poster.event_specific_location }}
                                 {% else %}
@@ -96,8 +96,8 @@
                     <div class="clubcard-box eventtext" style="right: 0">
                         <h3 class="logis">
 
-                            {{ poster.event_datetime|date:"l, M j, Y" }}<br/>
-                            {{ poster.event_datetime|time:"g:i A" }}<br/>
+                            {{ poster.event_start_datetime|date:"l, M j, Y" }}<br/>
+                            {{ poster.event_start_datetime|time:"g:i A" }}<br/>
                             {% if poster.event_specific_location %}
                             {{ poster.event_location|humanize }}: {{ poster.event_specific_location }}
                             {% else %}

@@ -38,12 +38,12 @@
             </thead>
             <tbody>
             {% for poster in posters %}
-                <tr data-date="{{ poster.event_datetime|date:"SHORT_DATE_FORMAT" }}"
-                    data-time="{{ poster.event_datetime|time:"g:i A" }}" data-host="{{ poster.event_host }}"
+                <tr data-date="{{ poster.event_start_datetime|date:"SHORT_DATE_FORMAT" }}"
+                    data-time="{{ poster.event_start_datetime|time:"g:i A" }}" data-host="{{ poster.event_host }}"
                     data-genloc="{{ poster.event_location }}">
-                    <td class="date clickable" data-date="{{ poster.event_datetime|date:"U" }}">
-                        {{ poster.event_datetime|date:"l" }}<br/>
-                        {{ poster.event_datetime|date:"M j, Y" }}
+                    <td class="date clickable" data-date="{{ poster.event_start_datetime|date:"U" }}">
+                        {{ poster.event_start_datetime|date:"l" }}<br/>
+                        {{ poster.event_start_datetime|date:"M j, Y" }}
                     </td>
                     <td>
                         {% if poster.poster_file %}
@@ -57,8 +57,8 @@
                     <td>
                         <div class="description">{{ poster.event_body|sanitize }}</div>
                     </td>
-                    <td class="time clickable" data-time="{{ poster.event_datetime|date:"H:i" }}">
-                            {{ poster.event_datetime|date:"g:i A" }}
+                    <td class="time clickable" data-time="{{ poster.event_start_datetime|date:"H:i" }}">
+                            {{ poster.event_start_datetime|date:"g:i A" }}
                     </td>
                     <td class="clickable location">
                         {{ poster.event_location|humanize }}
