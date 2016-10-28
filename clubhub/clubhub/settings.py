@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'easy_timezones',
     'bootstrap3',
 ]
 
@@ -51,7 +50,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'easy_timezones.middleware.EasyTimezoneMiddleware',
+    'main.middleware.TimezoneMiddleware'
 ]
 
 ROOT_URLCONF = 'clubhub.urls'
@@ -134,8 +133,6 @@ STATICFILES_DIRS = [
 
 MEDIA_ROOT = '/opt/media'
 MEDIA_URL = '/media/'
-
-GEOIP_DATABASE = os.path.join(BASE_DIR, 'internal/geoIP/GeoLite2-City.mmdb')
 
 # Club Hub Mailer
 
