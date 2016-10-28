@@ -48,6 +48,7 @@ def present_cast(request):
 def submit(request):
     if request.method == "POST":
         form = SubmitEvent(request.POST, request.FILES)
+        print(request.POST)
         if form.is_valid():
             event = form.save()
 

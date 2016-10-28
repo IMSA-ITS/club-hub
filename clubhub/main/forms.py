@@ -4,7 +4,7 @@ from .models import Event
 
 class SubmitEvent(forms.ModelForm):
     required_css_class = "required"
-    event_datetime = forms.DateTimeField(input_formats=["%m/%d/%Y %H:%M%z"], label="Event End Date/Time")
+    event_datetime = forms.DateTimeField(input_formats=("%m/%d/%Y %I:%M %p",), label="Event End Date/Time")
 
     class Meta:
         model = Event
