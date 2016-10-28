@@ -146,6 +146,7 @@ h2 {
 }
 #event-table .description {
     text-align: left;
+    overflow: hidden;
 }
 #event-table th:first-child {
     border-radius: 5px 0 0 0;
