@@ -58,8 +58,8 @@ def submit(request):
             approvers = Approver.objects.values_list("email", flat=True)
 
             html_message = "<p>Hello!</p>" \
-                           "<p><i>{}</i> has submitted <b>\"{}\"</b> to ClubHub. The submission requires approval before it can be shown on ClubHub. " \
-                           "You can go to <a href=\"https://clubhub.live/admin\">ClubHub Central</a> to approve or reject this submission.</p>" \
+                           "<p><i>{}</i> has submitted <b>\"{}\"</b> to Club Hub. The submission requires approval before it can be shown on Club Hub. " \
+                           "You can go to <a href=\"https://clubhub.live/admin\">Club Hub Central</a> to approve or reject this submission.</p>" \
                            "<p>Submission details:</p>" \
                            "<table style=\"width: 100%\">" \
                            "<tr><td>EVENT NAME</td><td>{}</td></tr>" \
@@ -88,10 +88,10 @@ def submit(request):
                 "<img src=\"https://clubhub.live" + MEDIA_URL + str(event.poster_file) + "\">" if event.poster_file else "No poster.",
                 "Yes" if not event.display_no_slideshow else "No",
                 "Yes" if event.display_fullscreen else "No") + \
-                           "<p>Thank you for using ClubHub!</p>"
+                           "<p>Thank you for using Club Hub!</p>"
 
             for approver in approvers:
-                subject = "[ClubHub] New Event Registration"
+                subject = "[Club Hub] New Event Registration"
                 to_email = Email(approver)
                 content = Content("text/html", html_message)
                 mail = Mail(from_email, subject, to_email, content)
@@ -99,7 +99,7 @@ def submit(request):
 
             html_message = "<p>Hello!</p>" \
                            "<p>Your submisson for <b>\"{}\"</b> has been received. Student Life will now review your event for approval." \
-                           " If it is approved, you'll be able to see it on the ClubHub registry at https://clubhub.live, so check there for updates." \
+                           " If it is approved, you'll be able to see it on the Club Hub registry at https://clubhub.live, so check there for updates." \
                            " For corrections, questions, and concerns, please contact Student Life at <a href=\"mailto:imsaactivities@gmail.com\">imsaactivities@gmail.com</a>.</p>" \
                            "<p>Here are the details of your submission:</p>" \
                            "<table style=\"width: 100%\">" \
@@ -126,9 +126,9 @@ def submit(request):
                 "Yes" if event.poster_file else "No",
                 "Yes" if not event.display_no_slideshow else "No",
                 "Yes" if event.display_fullscreen else "No") + \
-                           "<p>Thank you for using ClubHub!</p>"
+                           "<p>Thank you for using Club Hub!</p>"
 
-            subject = "[ClubHub] Registration Confirmation"
+            subject = "[Club Hub] Registration Confirmation"
             to_email = Email(event.host_email)
             content = Content("text/html", html_message)
             mail = Mail(from_email, subject, to_email, content)
