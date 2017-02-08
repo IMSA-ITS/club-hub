@@ -22,12 +22,17 @@ echo -e "\n@/home/pi/runclubhub.sh" >> ~/.config/lxsession/LXDE-pi/autostart
 echo "Setting up NTP..."
 sudo cp ntp.imsa.conf /etc/ntp.conf
 sudo systemctl stop ntp
-sudo ntpd -g
-sudo sustemctl start ntp
+sudo ntpd -qg
+sudo systemctl start ntp
 
 # Prompt user to setup timezone
 echo "Installation is complete! All that's left to do is to configure Club Hub's timezone."
 echo "When you are ready, the Club Hub website will open. Select your timezone there."
+echo "It may take some time for NTP to set the correct time on the Raspberry Pi..."
+echo "If you get SSL errors, just keep refreshing until it works."
 read -rsp "Press any key to continue..." -n1 key
 
 chromium-browser https://clubhub.live
+
+# Remind user to restart!
+echo "You're all done! Don't forget to restart to allow changes to take effect.
