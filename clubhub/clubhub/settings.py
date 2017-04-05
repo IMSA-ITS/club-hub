@@ -25,7 +25,7 @@ SECRET_KEY = 'tX6YZf222q^t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["imsa.edu"]
+ALLOWED_HOSTS = ["imsa.edu", "localhost"]
 
 
 # Application definition
