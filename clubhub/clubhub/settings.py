@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'YOUR SECRET KEY'
+SECRET_KEY = 'tX6YZf222q^t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["YOUR DEPLOYMENT DOMAIN"]
+ALLOWED_HOSTS = ["imsa.edu"]
 
 
 # Application definition
@@ -82,7 +82,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'clubhubdb',
 	'USER': 'clubhub',
-	'PASSWORD': 'YOUR DATABASE PASSWORD',
+	'PASSWORD': 'testing123',
 	'HOST': 'postgres',
 	'PORT': '5432'
     }
@@ -136,6 +136,6 @@ MEDIA_URL = '/media/'
 
 # Club Hub Mailer
 
-SENDGRID_API_KEY = 'YOUR SENDGRID API KEY'
+SENDGRID_API_KEY = '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'
 
-ADMINS = [('ADMIN NAME', 'admin@email.com')]
+ADMINS = [('Fred Yankowski', 'fcy@imsa.edu')]
