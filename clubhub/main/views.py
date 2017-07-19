@@ -53,13 +53,13 @@ def submit(request):
             event = form.save()
 
             sg = sendgrid.SendGridAPIClient(apikey=SENDGRID_API_KEY)
-            from_email = Email("admin@clubhub.live")
+            from_email = Email("webmaster@imsa.edu")
 
             approvers = Approver.objects.values_list("email", flat=True)
 
             html_message = "<p>Hello!</p>" \
                            "<p><i>{}</i> has submitted <b>\"{}\"</b> to Club Hub. The submission requires approval before it can be shown on Club Hub. " \
-                           "You can go to <a href=\"https://clubhub.live/admin\">Club Hub Central</a> to approve or reject this submission.</p>" \
+                           "You can go to <a href=\"https://clubhub.imsa.edu/admin\">Club Hub Central</a> to approve or reject this submission.</p>" \
                            "<p>Submission details:</p>" \
                            "<table style=\"width: 100%\">" \
                            "<tr><td>EVENT NAME</td><td>{}</td></tr>" \
@@ -85,7 +85,7 @@ def submit(request):
                     escape(event.event_specific_location)) if escape(
                     event.event_specific_location) else escape(
                     event.event_location),
-                "<img src=\"https://clubhub.live" + MEDIA_URL + str(event.poster_file) + "\">" if event.poster_file else "No poster.",
+                "<img src=\"https://clubhub.imsa.edu" + MEDIA_URL + str(event.poster_file) + "\">" if event.poster_file else "No poster.",
                 "Yes" if not event.display_no_slideshow else "No",
                 "Yes" if event.display_fullscreen else "No") + \
                            "<p>Thank you for using Club Hub!</p>"
@@ -99,7 +99,7 @@ def submit(request):
 
             html_message = "<p>Hello!</p>" \
                            "<p>Your submisson for <b>\"{}\"</b> has been received. Student Life will now review your event for approval." \
-                           " If it is approved, you'll be able to see it on the Club Hub registry at https://clubhub.live, so check there for updates." \
+                           " If it is approved, you'll be able to see it on the Club Hub registry at https://clubhub.imsa.edu, so check there for updates." \
                            " For corrections, questions, and concerns, please contact Student Life at <a href=\"mailto:imsaactivities@gmail.com\">imsaactivities@gmail.com</a>.</p>" \
                            "<p>Here are the details of your submission:</p>" \
                            "<table style=\"width: 100%\">" \
